@@ -61,7 +61,7 @@ shadowJar {
     }
     minimize()
     zip64 = true
-    archiveFileName = 'bash_parser.jar'
+    archiveFileName = 'BashSupport.jar'
 }
 
 sourceSets {
