@@ -42,6 +42,7 @@ public abstract class StubIndex {
   /**
    * @deprecated use { #getElements(StubIndexKey, Object, com.intellij.openapi.project.Project, GlobalSearchScope, Class)}
    */
+  @Deprecated
   public abstract <Key, Psi extends PsiElement> Collection<Psi> get(@NotNull StubIndexKey<Key, Psi> indexKey,
                                                                     @NotNull Key key,
                                                                     @Nullable final GlobalSearchScope scope);
@@ -49,6 +50,7 @@ public abstract class StubIndex {
   /**
    * @deprecated use { #getElements(StubIndexKey, Object, com.intellij.openapi.project.Project, GlobalSearchScope, Class)}
    */
+  @Deprecated
   public <Key, Psi extends PsiElement> Collection<Psi> get(@NotNull StubIndexKey<Key, Psi> indexKey,
                                                                     @NotNull Key key,
                                                                     @Nullable final GlobalSearchScope scope,
@@ -59,6 +61,7 @@ public abstract class StubIndex {
   /**
    * @deprecated use processElements
    */
+  @Deprecated
   public <Key, Psi extends PsiElement> boolean process(@NotNull StubIndexKey<Key, Psi> indexKey,
                                                                 @NotNull Key key,
                                                                 @Nullable GlobalSearchScope scope,
@@ -75,6 +78,7 @@ public abstract class StubIndex {
   /**
    * @deprecated use processElements
    */
+  @Deprecated
   public <Key, Psi extends PsiElement> boolean process(@NotNull StubIndexKey<Key, Psi> indexKey,
                                                                 @NotNull Key key,
                                                                 @Nullable GlobalSearchScope scope,
@@ -95,6 +99,7 @@ public abstract class StubIndex {
   /**
    * @deprecated use { #getElements(StubIndexKey, Object, com.intellij.openapi.project.Project, GlobalSearchScope, Class)}
    */
+  @Deprecated
   public <Key, Psi extends PsiElement> Collection<Psi> safeGet(@NotNull StubIndexKey<Key, Psi> indexKey,
                                                                @NotNull Key key,
                                                                final GlobalSearchScope scope,

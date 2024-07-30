@@ -35,6 +35,7 @@ public interface ComponentManager extends UserDataHolder, Disposable {
    * @return array of components
    * @deprecated use extension points instead
    */
+  @Deprecated
   @NotNull
   <T> T[] getComponents(@NotNull Class<T> baseClass);
 }

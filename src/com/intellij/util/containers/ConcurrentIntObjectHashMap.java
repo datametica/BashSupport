@@ -33,6 +33,7 @@ import java.util.concurrent.locks.LockSupport;
 // added cacheOrGet convenience method
 // Null values are NOT allowed
 
+@Deprecated
 class ConcurrentIntObjectHashMap<V> implements ConcurrentIntObjectMap<V> {
   /**
    * The largest possible table capacity.  This value must be

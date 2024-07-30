@@ -20,5 +20,6 @@ package com.intellij.openapi.util;
  * @deprecated Use { com.intellij.openapi.components.PersistentStateComponent} instead.
  *
  */
+@Deprecated
 public interface JDOMExternalizable {
 }

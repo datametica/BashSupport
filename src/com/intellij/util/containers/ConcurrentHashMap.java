@@ -228,6 +228,7 @@ import java.util.concurrent.locks.LockSupport;
  * @since 1.5
  * @deprecated Use { ContainerUtil#newConcurrentMap()} instead
  */
+@Deprecated
 public final class ConcurrentHashMap<K, V> extends AbstractMap<K, V>
   implements ConcurrentMap<K, V>, TObjectHashingStrategy<K> {
 

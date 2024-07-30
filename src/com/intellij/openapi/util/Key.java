@@ -109,6 +109,7 @@ public class Key<T> {
   /**
    * @deprecated access to Key via its name is a kind of hack, use Key instance directly instead
    */
+  @Deprecated
   @Nullable
   public static Key<?> findKeyByName(String name) {
     for (ConcurrentIntObjectMap.IntEntry<Key> key : allKeys.entries()) {

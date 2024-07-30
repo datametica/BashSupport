@@ -803,6 +803,7 @@ public class StringUtil extends StringUtilRt {
   /**
    * @deprecated use #capitalize(String)
    */
+  @Deprecated
   @Contract(value = "null -> null; !null -> !null", pure = true)
   public static String firstLetterToUpperCase(@Nullable final String displayString) {
     if (displayString == null || displayString.isEmpty()) return displayString;
@@ -1484,6 +1485,7 @@ public class StringUtil extends StringUtilRt {
   }
 
   /** @deprecated use { #startsWithConcatenation(String, String...)} (to remove in IDEA 15) */
+  @Deprecated
   public static boolean startsWithConcatenationOf(@NotNull String string, @NotNull String firstPrefix, @NotNull String secondPrefix) {
     return startsWithConcatenation(string, firstPrefix, secondPrefix);
   }

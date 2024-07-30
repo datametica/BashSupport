@@ -238,8 +238,10 @@ public class SystemInfo extends SystemInfoRt {
   }
 
   /** @deprecated use { #isWinXpOrNewer} (to be removed in IDEA 17) */
+  @Deprecated
   public static final boolean isWindowsXP = isWindows && (OS_VERSION.equals("5.1") || OS_VERSION.equals("5.2"));
 
   /** @deprecated use { #is32Bit} or { #is64Bit} (to be removed in IDEA 17) */
+  @Deprecated
   public static final boolean isAMD64 = "amd64".equals(OS_ARCH);
 }

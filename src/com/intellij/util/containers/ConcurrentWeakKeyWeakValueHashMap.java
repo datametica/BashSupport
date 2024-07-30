@@ -34,6 +34,7 @@ import java.lang.ref.WeakReference;
  * Null values are NOT allowed
  * @deprecated Use { ContainerUtil#createConcurrentWeakKeyWeakValueMap()} instead
  */
+@Deprecated
 class ConcurrentWeakKeyWeakValueHashMap<K, V> extends ConcurrentWeakKeySoftValueHashMap<K,V> {
   ConcurrentWeakKeyWeakValueHashMap(int initialCapacity,
                                     float loadFactor,

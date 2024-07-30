@@ -56,6 +56,7 @@ public abstract class SmartPointerManager {
    * @param element the element to create a pointer to.
    * @return the smart pointer instance.
    */
+  @Deprecated
   @NotNull public <E extends PsiElement> SmartPsiElementPointer<E> createLazyPointer(@NotNull E element) {
     return createSmartPsiElementPointer(element);
   }

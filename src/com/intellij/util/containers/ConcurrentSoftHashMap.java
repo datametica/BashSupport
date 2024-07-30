@@ -35,6 +35,7 @@ import java.util.Map;
  * Null values are NOT allowed
  * @deprecated Use { ContainerUtil#createConcurrentSoftMap()} instead
  */
+@Deprecated
 final class ConcurrentSoftHashMap<K, V> extends ConcurrentRefHashMap<K, V> {
   private static class SoftKey<K, V> extends SoftReference<K> implements KeyReference<K, V> {
     private final int myHash; // Hashcode of key, stored here since the key may be tossed by the GC

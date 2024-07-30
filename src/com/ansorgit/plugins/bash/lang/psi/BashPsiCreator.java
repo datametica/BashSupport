@@ -240,8 +240,6 @@ public class BashPsiCreator implements BashElementTypes {
             return new BashBinaryDataElement(node);
         }
 
-        log.warn("MISSING PSI for" + node);
-
         return new ASTWrapperPsiElement(node);
     }
 }

@@ -36,5 +36,6 @@ public interface Accessor {
   /**
    * @deprecated use { MutableAccessor#set(Object, Object)} instead
    */
+  @Deprecated
   void write(Object o, Object value);
 }

@@ -133,6 +133,7 @@ public class ShutDownTracker implements Runnable {
   }
 
   /** @deprecated to be removed in IDEA 2018 */
+  @Deprecated
   public static void invokeAndWait(boolean returnOnTimeout, boolean runInEdt, @NotNull final Runnable runnable) {
     if (!runInEdt) {
       if (returnOnTimeout) {

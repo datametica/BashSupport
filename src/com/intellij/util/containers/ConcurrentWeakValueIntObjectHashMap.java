@@ -28,6 +28,7 @@ import java.lang.ref.WeakReference;
  * Null values are NOT allowed
  * @deprecated Use { ContainerUtil#createConcurrentIntObjectWeakValueMap()} instead
  */
+@Deprecated
 class ConcurrentWeakValueIntObjectHashMap<V> extends ConcurrentRefValueIntObjectHashMap<V> {
   private static class MyRef<V> extends WeakReference<V> implements IntReference<V> {
     private final int hash;

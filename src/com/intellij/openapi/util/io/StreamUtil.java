@@ -63,6 +63,7 @@ public class StreamUtil {
    * @deprecated depends on the default encoding, use StreamUtil#readText(java.io.InputStream, String) instead
    */
   @NotNull
+  @Deprecated
   public static String readText(@NotNull InputStream inputStream) throws IOException {
     final byte[] data = loadFromStream(inputStream);
     return new String(data);

@@ -350,6 +350,7 @@ public class FileUtil extends FileUtilRt {
 
   /** @deprecated to be removed in IDEA 17 */
   @SuppressWarnings({"unused", "StringToUpperCaseOrToLowerCaseWithoutLocale"})
+  @Deprecated
   public static String nameToCompare(@NotNull String name) {
     return (SystemInfo.isFileSystemCaseSensitive ? name : name.toLowerCase()).replace('\\', '/');
   }
@@ -661,6 +662,7 @@ public class FileUtil extends FileUtilRt {
    *             If you need to check whether a file has a specified extension use { FileUtilRt#extensionEquals(String, String)}
    */
   @SuppressWarnings("StringToUpperCaseOrToLowerCaseWithoutLocale")
+  @Deprecated
   @NotNull
   public static String getExtension(@NotNull String fileName) {
     return FileUtilRt.getExtension(fileName).toLowerCase();
@@ -696,6 +698,7 @@ public class FileUtil extends FileUtilRt {
   }
 
   /** @deprecated use { #sanitizeFileName(String, boolean)} (to be removed in IDEA 17) */
+  @Deprecated
   public static String sanitizeName(@NotNull String name) {
     return sanitizeFileName(name, false);
   }

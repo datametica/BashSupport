@@ -49,6 +49,7 @@ public class DefaultStubBuilder implements StubBuilder {
    * @deprecated override and invoke { #skipChildProcessingWhenBuildingStubs(ASTNode, ASTNode)} (to be removed in IDEA 2017)
    * Note to implementers: always keep in sync with {plain #skipChildProcessingWhenBuildingStubs(ASTNode, ASTNode)}.
    */
+  @Deprecated
   protected boolean skipChildProcessingWhenBuildingStubs(@NotNull PsiElement parent, @NotNull PsiElement element) {
     return false;
   }

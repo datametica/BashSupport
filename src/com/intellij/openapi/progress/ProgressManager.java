@@ -70,6 +70,7 @@ public abstract class ProgressManager extends ProgressIndicatorProvider {
    * @param canceledRunnable a callback to be called in Swing UI thread if the process have been canceled by the user.
    * @deprecated use { #run(Task)}
    */
+  @Deprecated
   public abstract void runProcessWithProgressAsynchronously(
                                                             @NotNull @Nls String progressTitle,
                                                             @NotNull Runnable process,
@@ -89,6 +90,7 @@ public abstract class ProgressManager extends ProgressIndicatorProvider {
    * @param option           progress indicator behavior controller.
    * @deprecated use { #run(Task)}
    */
+  @Deprecated
   public abstract void runProcessWithProgressAsynchronously(
                                                             @NotNull @Nls String progressTitle,
                                                             @NotNull Runnable process,

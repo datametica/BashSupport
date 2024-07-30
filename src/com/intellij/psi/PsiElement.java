@@ -316,6 +316,7 @@ public interface PsiElement extends UserDataHolder {
    * @throws IncorrectOperationException if the modification is not supported or not possible for some reason.
    * @deprecated not all PSI implementations implement this method correctly.
    */
+  @Deprecated
   void checkAdd(@NotNull PsiElement element) throws IncorrectOperationException;
 
   /**
@@ -365,6 +366,7 @@ public interface PsiElement extends UserDataHolder {
    * @throws IncorrectOperationException if the modification is not supported or not possible for some reason.
    * @deprecated not all PSI implementations implement this method correctly.
    */
+  @Deprecated
   void checkDelete() throws IncorrectOperationException;
 
   /**

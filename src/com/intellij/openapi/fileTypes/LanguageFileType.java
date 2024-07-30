@@ -73,6 +73,7 @@ public abstract class LanguageFileType implements FileType{
    * Overriders: override { #extractCharsetFromFileContent(Project, VirtualFile, CharSequence)} instead
    * @deprecated 
    */
+  @Deprecated
   public Charset extractCharsetFromFileContent(@Nullable VirtualFile file, @NotNull String content) {
     return null;
   }

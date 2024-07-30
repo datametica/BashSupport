@@ -29,6 +29,7 @@ import java.util.Map;
  * Null values are NOT allowed
  * @deprecated Use { ContainerUtil#createConcurrentSoftValueMap()} instead
  */
+@Deprecated
 public final class ConcurrentSoftValueHashMap<K,V> extends ConcurrentRefValueHashMap<K,V> {
   public ConcurrentSoftValueHashMap(@NotNull Map<K, V> map) {
     super(map);

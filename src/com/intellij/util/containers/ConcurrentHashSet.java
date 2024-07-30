@@ -27,6 +27,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @deprecated use { ContainerUtil#newConcurrentSet()} instead
  */
+@Deprecated
 public class ConcurrentHashSet<K> implements Set<K> {
   private final ConcurrentMap<K, Boolean> map;
 

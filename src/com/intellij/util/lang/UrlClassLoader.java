@@ -158,6 +158,7 @@ public class UrlClassLoader extends ClassLoader {
   private final boolean myAllowBootstrapResources;
 
   /** @deprecated use { #build()}, left for compatibility with java.system.class.loader setting */
+  @Deprecated
   public UrlClassLoader(@NotNull ClassLoader parent) {
     this(build().urls(((URLClassLoader)parent).getURLs()).parent(parent.getParent()).allowLock().useCache()
            .usePersistentClasspathIndexForLocalClassDirectories());
@@ -197,6 +198,7 @@ public class UrlClassLoader extends ClassLoader {
   }
 
   /** @deprecated to be removed in IDEA 15 */
+  @Deprecated
   @SuppressWarnings({"unused", "deprecation"})
   public void addURL(URL url) {
     getClassPath().addURL(url);

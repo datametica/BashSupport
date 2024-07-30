@@ -77,6 +77,7 @@ public class ClassPath {
   }
 
   /** @deprecated to be removed in IDEA 15 */
+  @Deprecated
   void addURL(URL url) {
     push(Collections.singletonList(url));
   }

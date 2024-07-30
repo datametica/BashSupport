@@ -731,6 +731,7 @@ public abstract class GlobalSearchScope extends SearchScope implements ProjectAw
     /**
      * @deprecated use { GlobalSearchScope#filesScope(Project, Collection)}
      */
+    @Deprecated
     public FilesScope( @NotNull Collection<VirtualFile> files) {
       this( files, null);
     }

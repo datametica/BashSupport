@@ -25,18 +25,21 @@ import java.nio.charset.Charset;
 @Deprecated 
 public abstract class OutputReader extends BaseOutputReader {
   /** @deprecated use { BaseOutputReader}. to be removed in IDEA 2018.1 */
+  @Deprecated
   public OutputReader(@NotNull InputStream stream, @Nullable Charset charset, @NotNull String name) {
     super(stream, charset);
     start(name);
   }
 
   /** @deprecated use { BaseOutputReader}. to be removed in IDEA 2018.1 */
+  @Deprecated
   public OutputReader(@NotNull InputStream stream, @Nullable Charset charset, @Nullable SleepingPolicy policy, @NotNull String name) {
     super(stream, charset, Options.withPolicy(policy));
     start(name);
   }
 
   /** @deprecated use { BaseOutputReader}. to be removed in IDEA 2018.1 */
+  @Deprecated
   public void readFully() throws InterruptedException {
   }
 }
