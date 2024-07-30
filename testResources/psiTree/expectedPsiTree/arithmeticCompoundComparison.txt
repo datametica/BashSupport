@@ -1,0 +1,86 @@
+ASTWrapperPsiElement(FILE)
+  [PSI] PsiElement(if shellcommand)
+    PsiElement([Bash] if)('if')
+    PsiWhiteSpace(' ')
+    [PSI] PsiElement(conditional shellcommand)
+      PsiElement([Bash] [ (left conditional))('[ ')
+      [PSI] Bash string
+        PsiElement([Bash] string begin)('"')
+        [PSI] Bash-var
+          PsiElement([Bash] variable)('$num1')
+        PsiElement([Bash] string end)('"')
+      PsiWhiteSpace(' ')
+      PsiElement([Bash] cond_op)('-lt')
+      PsiWhiteSpace(' ')
+      [PSI] Bash string
+        PsiElement([Bash] string begin)('"')
+        [PSI] Bash-var
+          PsiElement([Bash] variable)('$num2')
+        PsiElement([Bash] string end)('"')
+      PsiElement([Bash]  ] (right conditional))(' ]')
+    PsiWhiteSpace(' ')
+    PsiElement([Bash] &&)('&&')
+    PsiWhiteSpace(' ')
+    [PSI] PsiElement(conditional shellcommand)
+      PsiElement([Bash] [ (left conditional))('[ ')
+      [PSI] Bash string
+        PsiElement([Bash] string begin)('"')
+        [PSI] Bash-var
+          PsiElement([Bash] variable)('$num2')
+        PsiElement([Bash] string end)('"')
+      PsiWhiteSpace(' ')
+      PsiElement([Bash] cond_op)('-lt')
+      PsiWhiteSpace(' ')
+      [PSI] Bash string
+        PsiElement([Bash] string begin)('"')
+        [PSI] Bash-var
+          PsiElement([Bash] variable)('$num3')
+        PsiElement([Bash] string end)('"')
+      PsiElement([Bash]  ] (right conditional))(' ]')
+    PsiElement([Bash] ;)(';')
+    PsiWhiteSpace(' ')
+    PsiElement([Bash] then)('then')
+    [PSI] PsiElement(logical block)
+      PsiElement([Bash] linefeed)('\n')
+      PsiWhiteSpace(' ')
+      PsiWhiteSpace(' ')
+      PsiWhiteSpace(' ')
+      PsiWhiteSpace(' ')
+      [PSI] Simple command
+        [PSI] BashGenericCommand
+          [PSI] bash combined word
+            PsiElement([Bash] word)('echo')
+        PsiWhiteSpace(' ')
+        [PSI] Bash string
+          PsiElement([Bash] string begin)('"')
+          [PSI] Bash-var
+            PsiElement([Bash] variable)('$num1')
+          PsiElement([Bash] string content)(' is less than ')
+          [PSI] Bash-var
+            PsiElement([Bash] variable)('$num2')
+          PsiElement([Bash] string content)(' AND ')
+          [PSI] Bash-var
+            PsiElement([Bash] variable)('$num2')
+          PsiElement([Bash] string content)(' is less than ')
+          [PSI] Bash-var
+            PsiElement([Bash] variable)('$num3')
+          PsiElement([Bash] string end)('"')
+    PsiElement([Bash] linefeed)('\n')
+    PsiElement([Bash] else)('else')
+    [PSI] PsiElement(logical block)
+      PsiElement([Bash] linefeed)('\n')
+      PsiWhiteSpace(' ')
+      PsiWhiteSpace(' ')
+      PsiWhiteSpace(' ')
+      PsiWhiteSpace(' ')
+      [PSI] Simple command
+        [PSI] BashGenericCommand
+          [PSI] bash combined word
+            PsiElement([Bash] word)('echo')
+        PsiWhiteSpace(' ')
+        [PSI] Bash string
+          PsiElement([Bash] string begin)('"')
+          PsiElement([Bash] string content)('The compound comparison (num1 < num2 AND num2 < num3) is false')
+          PsiElement([Bash] string end)('"')
+    PsiElement([Bash] linefeed)('\n')
+    PsiElement([Bash] fi)('fi')

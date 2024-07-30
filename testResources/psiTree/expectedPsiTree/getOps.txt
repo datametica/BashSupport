@@ -1,0 +1,102 @@
+ASTWrapperPsiElement(FILE)
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      PsiElement([Bash] word)('getopts')
+    PsiWhiteSpace(' ')
+    [PSI] Bash string
+      PsiElement([Bash] string begin)('"')
+      PsiElement([Bash] string content)('cd:')
+      PsiElement([Bash] string end)('"')
+    PsiWhiteSpace(' ')
+    [PSI] Bash var def
+      [PSI] bash combined word
+        PsiElement([Bash] word)('opt')
+  PsiElement([Bash] ;)(';')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        PsiElement([Bash] word)('echo')
+    PsiWhiteSpace(' ')
+    [PSI] bash combined word
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$opt')
+  PsiElement([Bash] ;)(';')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        PsiElement([Bash] word)('echo')
+    PsiWhiteSpace(' ')
+    [PSI] bash combined word
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$OPTARG')
+  PsiElement([Bash] ;)(';')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      PsiElement([Bash] word)('getopts')
+    PsiWhiteSpace(' ')
+    [PSI] Bash string
+      PsiElement([Bash] string begin)('"')
+      PsiElement([Bash] string content)('cd:')
+      PsiElement([Bash] string end)('"')
+    PsiWhiteSpace(' ')
+    [PSI] Bash var def
+      [PSI] bash combined word
+        PsiElement([Bash] word)('opt')
+  PsiElement([Bash] ;)(';')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        PsiElement([Bash] word)('echo')
+    PsiWhiteSpace(' ')
+    [PSI] bash combined word
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$opt')
+  PsiElement([Bash] ;)(';')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        PsiElement([Bash] word)('echo')
+    PsiWhiteSpace(' ')
+    [PSI] bash combined word
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$OPTARG')
+  PsiElement([Bash] ;)(';')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      PsiElement([Bash] word)('getopts')
+    PsiWhiteSpace(' ')
+    [PSI] Bash string
+      PsiElement([Bash] string begin)('"')
+      PsiElement([Bash] string content)('cd:')
+      PsiElement([Bash] string end)('"')
+    PsiWhiteSpace(' ')
+    [PSI] Bash var def
+      [PSI] bash combined word
+        PsiElement([Bash] word)('opt')
+  PsiElement([Bash] ;)(';')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        PsiElement([Bash] word)('echo')
+    PsiWhiteSpace(' ')
+    [PSI] bash combined word
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$opt')
+  PsiElement([Bash] ;)(';')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        PsiElement([Bash] word)('echo')
+    PsiWhiteSpace(' ')
+    [PSI] bash combined word
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$OPTARG')
+  PsiElement([Bash] ;)(';')

@@ -1,1 +1,0 @@
-trap <caret>'export a=1; echo CALLED' RETURN

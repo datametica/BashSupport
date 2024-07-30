@@ -1,1 +1,0 @@
-<caret>LD_LIBRARY_PATH="dir"

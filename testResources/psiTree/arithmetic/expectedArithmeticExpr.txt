@@ -1,0 +1,99 @@
+ASTWrapperPsiElement(FILE)
+  [PSI] Simple command
+    [PSI] Bash var def
+      PsiElement([Bash] assignment_word)('l')
+      PsiElement([Bash] =)('=')
+      [PSI] bash combined word
+        PsiElement([Bash] int literal)('12')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        PsiElement([Bash] word)('echo')
+    PsiWhiteSpace(' ')
+    [PSI] Bash string
+      PsiElement([Bash] string begin)('"')
+      PsiElement([Bash] string content)('l (initial value l=12) = ')
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$l')
+      PsiElement([Bash] string end)('"')
+  PsiWhiteSpace(' ')
+  PsiWhiteSpace(' ')
+  PsiWhiteSpace(' ')
+  PsiComment([Bash] Comment)('# 12')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Arithmetic command
+    PsiElement([Bash] (()('((')
+    PsiWhiteSpace(' ')
+    [PSI] ArithPreIncrement
+      PsiElement([Bash] --)('--')
+      [PSI] ArithSimpleExpr
+        [PSI] Bash-var
+          PsiElement([Bash] word)('l')
+    PsiWhiteSpace(' ')
+    PsiElement([Bash] )))('))')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        PsiElement([Bash] word)('echo')
+    PsiWhiteSpace(' ')
+    [PSI] Bash string
+      PsiElement([Bash] string begin)('"')
+      PsiElement([Bash] string content)('l (after --l) = ')
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$l')
+      PsiElement([Bash] string end)('"')
+  PsiWhiteSpace(' ')
+  PsiWhiteSpace(' ')
+  PsiWhiteSpace(' ')
+  PsiComment([Bash] Comment)('# 11')
+  PsiElement([Bash] linefeed)('\n')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        PsiElement([Bash] word)('echo')
+    PsiWhiteSpace(' ')
+    [PSI] Bash string
+      PsiElement([Bash] string begin)('"')
+      PsiElement([Bash] string content)('m (initial value m=')
+      PsiElement([Bash] string end)('"')
+    [PSI] Bash string
+      PsiElement([Bash] string begin)('"')
+      PsiElement([Bash] string content)(') = ')
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$m')
+      PsiElement([Bash] string end)('"')
+  PsiWhiteSpace(' ')
+  PsiWhiteSpace(' ')
+  PsiWhiteSpace(' ')
+  PsiComment([Bash] Comment)('# ""')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Arithmetic command
+    PsiElement([Bash] (()('((')
+    PsiWhiteSpace(' ')
+    [PSI] ArithPostIncrement
+      [PSI] ArithSimpleExpr
+        [PSI] Bash-var
+          PsiElement([Bash] word)('m')
+      PsiElement([Bash] --)('--')
+    PsiWhiteSpace(' ')
+    PsiElement([Bash] )))('))')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        PsiElement([Bash] word)('echo')
+    PsiWhiteSpace(' ')
+    [PSI] Bash string
+      PsiElement([Bash] string begin)('"')
+      PsiElement([Bash] string content)('m (after m--) = ')
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$m')
+      PsiElement([Bash] string end)('"')
+  PsiWhiteSpace(' ')
+  PsiWhiteSpace(' ')
+  PsiWhiteSpace(' ')
+  PsiComment([Bash] Comment)('# -1')
+  PsiElement([Bash] linefeed)('\n')

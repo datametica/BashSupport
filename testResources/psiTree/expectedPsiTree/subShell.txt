@@ -1,0 +1,66 @@
+ASTWrapperPsiElement(FILE)
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      PsiElement([Bash] word)('export')
+    PsiWhiteSpace(' ')
+    [PSI] Bash var def
+      PsiElement([Bash] assignment_word)('a')
+      PsiElement([Bash] =)('=')
+      [PSI] bash combined word
+        PsiElement([Bash] int literal)('10')
+  PsiElement([Bash] linefeed)('\n')
+  PsiWhiteSpace(' ')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        PsiElement([Bash] word)('echo')
+    PsiWhiteSpace(' ')
+    [PSI] Bash string
+      PsiElement([Bash] string begin)('"')
+      PsiElement([Bash] string content)('Before subshell: ')
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$a')
+      PsiElement([Bash] string end)('"')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] PsiElement(subshell shellcommand)
+    PsiElement([Bash] ()('(')
+    PsiElement([Bash] linefeed)('\n')
+    PsiWhiteSpace(' ')
+    PsiWhiteSpace(' ')
+    [PSI] Simple command
+      [PSI] BashGenericCommand
+        PsiElement([Bash] word)('export')
+      PsiWhiteSpace(' ')
+      [PSI] Bash var def
+        PsiElement([Bash] assignment_word)('a')
+        PsiElement([Bash] =)('=')
+        [PSI] bash combined word
+          PsiElement([Bash] int literal)('20')
+    PsiElement([Bash] linefeed)('\n')
+    PsiWhiteSpace(' ')
+    PsiWhiteSpace(' ')
+    [PSI] Simple command
+      [PSI] BashGenericCommand
+        [PSI] bash combined word
+          PsiElement([Bash] word)('echo')
+      PsiWhiteSpace(' ')
+      [PSI] Bash string
+        PsiElement([Bash] string begin)('"')
+        PsiElement([Bash] string content)('inside subshell: ')
+        [PSI] Bash-var
+          PsiElement([Bash] variable)('$a')
+        PsiElement([Bash] string end)('"')
+    PsiElement([Bash] linefeed)('\n')
+    PsiElement([Bash] ))(')')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        PsiElement([Bash] word)('echo')
+    PsiWhiteSpace(' ')
+    [PSI] Bash string
+      PsiElement([Bash] string begin)('"')
+      PsiElement([Bash] string content)('After subshell: ')
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$a')
+      PsiElement([Bash] string end)('"')

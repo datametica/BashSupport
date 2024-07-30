@@ -1,3 +1,0 @@
-[    -f test.txt     ] &&    test.txt
------
-[ -f test.txt ] && test.txt

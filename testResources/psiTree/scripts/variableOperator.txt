@@ -1,0 +1,23 @@
+#!/bin/bash
+
+num1=10
+num2=5
+operator="*"
+
+# Perform arithmetic operation
+if [ "$operator" == "+" ]; then
+    result=$((num1 + num2))
+elif [ "$operator" == "-" ]; then
+    result=$((num1 - num2))
+elif [ "$operator" == "*" ]; then
+    result=$((num1 * num2))
+elif [ "$operator" == "/" ]; then
+    result=$((num1 / num2))
+elif [ "$operator" == "%" ]; then
+    result=$((num1 % num2))
+else
+    echo "Unsupported operator: $operator"
+    exit 1
+fi
+
+echo "The result of $num1 $operator $num2 is: $result"

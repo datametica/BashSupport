@@ -1,0 +1,8 @@
+l=12
+echo "l (initial value l=12) = $l"   # 12
+(( --l ))
+echo "l (after --l) = $l"   # 11
+
+echo "m (initial value m="") = $m"   # ""
+(( m-- ))
+echo "m (after m--) = $m"   # -1

@@ -1,0 +1,9 @@
+getopts "cd:" opt;
+echo $opt;
+echo $OPTARG;
+getopts "cd:" opt;
+echo $opt;
+echo $OPTARG;
+getopts "cd:" opt;
+echo $opt;
+echo $OPTARG;
