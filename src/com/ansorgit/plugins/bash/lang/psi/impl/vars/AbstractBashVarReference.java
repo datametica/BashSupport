@@ -66,10 +66,10 @@ abstract class AbstractBashVarReference extends CachingReference implements Bash
 
         //if this is variable which doesn't have a $ or escaped \$ sign prefix
         if (bashVar.getPrefixLength() == 0) {
-            return BashPsiUtils.replaceElement(bashVar, BashPsiElementFactory.createVariable(bashVar.getProject(), newName, true));
+            return BashPsiUtils.replaceElement(bashVar, BashPsiElementFactory.createVariable( newName, true));
         }
 
-        return BashPsiUtils.replaceElement(bashVar, BashPsiElementFactory.createVariable(bashVar.getProject(), newName, false));
+        return BashPsiUtils.replaceElement(bashVar, BashPsiElementFactory.createVariable( newName, false));
     }
 
     @Override

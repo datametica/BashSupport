@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * This is a subset of {@link com.intellij.psi.LiteralTextEscaper} to be used by the {@link UnescapingPsiBuilder}.
+ * This is a subset of { com.intellij.psi.LiteralTextEscaper} to be used by the { UnescapingPsiBuilder}.
  *
  * @author jansorg
  */
@@ -36,7 +36,7 @@ public interface TextPreprocessor {
     boolean decode(String content, @NotNull StringBuilder outChars);
 
     /**
-     * This method is called only after {@link #decode}, so it's possible to prepare necessary data in {@link #decode} and then use it here.
+     * This method is called only after { #decode}, so it's possible to prepare necessary data in { #decode} and then use it here.
      *
      * @param offsetInDecoded offset in the parsed injected file
      * @return offset in the host PSI element, or -1 if offset is out of host range.

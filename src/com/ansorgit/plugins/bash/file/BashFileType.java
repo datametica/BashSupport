@@ -16,12 +16,11 @@
 package com.ansorgit.plugins.bash.file;
 
 import com.ansorgit.plugins.bash.lang.BashLanguage;
-import com.ansorgit.plugins.bash.util.BashIcons;
 import com.intellij.lang.Language;
 import com.intellij.openapi.fileTypes.LanguageFileType;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
+
 
 /**
  * The file type implementation for Bash files.
@@ -71,7 +70,4 @@ public class BashFileType extends LanguageFileType {
         return SH_EXTENSION;
     }
 
-    public Icon getIcon() {
-        return BashIcons.BASH_FILE_ICON;
-    }
 }

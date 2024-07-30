@@ -18,7 +18,6 @@ package com.ansorgit.plugins.bash.lang.lexer;
 import com.ansorgit.plugins.bash.lang.util.HeredocSharedImpl;
 import com.google.common.collect.Lists;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 
 /**

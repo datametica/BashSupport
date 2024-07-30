@@ -26,7 +26,7 @@ import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
+
 
 /**
  * @author jansorg
@@ -45,11 +45,6 @@ public abstract class BashKeywordDefaultImpl extends BashCompositeElement implem
     public PsiReference getReference() {
         //a reference is required for QuickDoc support, camMavigate avoids the "Go to definition" nvaigation
         return BashPsiUtils.selfReference(this);
-    }
-
-    @Override
-    public ItemPresentation getPresentation() {
-        return new KeywordPresentation(keywordElement());
     }
 
     @Override
@@ -72,8 +67,5 @@ public abstract class BashKeywordDefaultImpl extends BashCompositeElement implem
             return null;
         }
 
-        public Icon getIcon(boolean open) {
-            return null;
-        }
     }
 }

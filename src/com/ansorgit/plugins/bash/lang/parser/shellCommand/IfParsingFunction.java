@@ -28,7 +28,7 @@ import com.intellij.psi.tree.TokenSet;
  * @author jansorg
  */
 public class IfParsingFunction implements ParsingFunction {
-    private static final TokenSet ELSE_ELIF_FI = TokenSet.create(ELIF_KEYWORD, ELSE_KEYWORD, FI_KEYWORD);
+    private static final TokenSet ELSE_ELIF_FI = TokenSet.create(ELIF_KEYWORD, ELSE_KEYWORD, FI_KEYWORD, ENDIF_KEYWORD);
 
     public boolean isValid(BashPsiBuilder builder) {
         return builder.getTokenType() == BashTokenTypes.IF_KEYWORD;
@@ -46,7 +46,16 @@ public class IfParsingFunction implements ParsingFunction {
         final PsiBuilder.Marker ifCommand = builder.mark();
         ParserUtil.getTokenAndAdvance(builder); //if keyword
 
-        if (ParserUtil.isEmptyListFollowedBy(builder, THEN_KEYWORD)) {
+        if (!Parsing.list.parseCompoundListWithOptionalTerminator(builder, false, false, IfParsingFunction.THEN_KEYWORD)) {
+            ParserUtil.error((PsiBuilder)builder, "parser.shell.if.expectedCommands");
+            ifCommand.drop();
+            return false;
+        }
+
+        final IElementType thenKeyword = ParserUtil.getTokenAndAdvance((PsiBuilder)builder);
+
+
+        /*if (ParserUtil.isEmptyListFollowedBy(builder, THEN_KEYWORD)) {
             ParserUtil.error(builder, "parser.shell.if.expectedCommands");
             ParserUtil.readEmptyListFollowedBy(builder, THEN_KEYWORD);
         } else if (!Parsing.list.parseCompoundList(builder, false)) {
@@ -55,7 +64,7 @@ public class IfParsingFunction implements ParsingFunction {
             return false;
         }
 
-        final IElementType thenKeyword = ParserUtil.getTokenAndAdvance(builder);
+        final IElementType thenKeyword = ParserUtil.getTokenAndAdvance(builder);*/
         if (thenKeyword != BashTokenTypes.THEN_KEYWORD) {
             ParserUtil.error(builder, "parser.shell.if.expectedThen");
             ifCommand.drop();
@@ -93,7 +102,7 @@ public class IfParsingFunction implements ParsingFunction {
         }
 
         final IElementType fiKeyword = ParserUtil.getTokenAndAdvance(builder);
-        if (fiKeyword != BashTokenTypes.FI_KEYWORD) {
+        if (fiKeyword != BashTokenTypes.FI_KEYWORD && fiKeyword != BashTokenTypes.ENDIF_KEYWORD) {
             ParserUtil.error(builder, "parser.shell.if.expectedFi");
             ifCommand.drop();
             return false;

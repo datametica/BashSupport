@@ -37,7 +37,7 @@ public class ComposedVariableParsing implements ParsingFunction {
     );
 
     public boolean isValid(BashPsiBuilder builder) {
-        if (builder.rawLookup(0) != DOLLAR) {
+        if (builder.rawLookup(0) != DOLLAR && builder.rawLookup(0) != AT) {
             return false;
         }
 
@@ -54,29 +54,26 @@ public class ComposedVariableParsing implements ParsingFunction {
         }
 
         //check if a subshell of command group is following
-        boolean ok;
-        OptionalParseResult result = Parsing.parameterExpansionParsing.parseIfValid(builder);
-        if (result.isValid()) {
-            ok = result.isParsedSuccessfully();
-        } else {
-            result = ShellCommandParsing.arithmeticParser.parseIfValid(builder);
+        boolean ok = false;
+        ParsingFunction[] parsingFunctions = {
+                Parsing.parameterExpansionParsing,
+                ShellCommandParsing.arithmeticParser,
+                Parsing.shellCommand.subshellParser
+        };
+
+        for (ParsingFunction parsingFunction : parsingFunctions) {
+            OptionalParseResult result = parsingFunction.parseIfValid(builder);
             if (result.isValid()) {
                 ok = result.isParsedSuccessfully();
-            } else {
-                result = Parsing.shellCommand.subshellParser.parseIfValid(builder);
-                if (result.isValid()) {
-                    ok = result.isParsedSuccessfully();
-                } else {
-                    ParserUtil.error(varMarker, "parser.unexpected.token");
-                    return false;
-                }
+                break;
             }
         }
 
         if (ok) {
             varMarker.done(VAR_COMPOSED_VAR_ELEMENT);
         } else {
-            varMarker.drop();
+            ParserUtil.error(varMarker, "parser.unexpected.token");
+            return  false;
         }
 
         return true;

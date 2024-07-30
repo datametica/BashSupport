@@ -15,7 +15,7 @@
 
 package com.ansorgit.plugins.bash.lang.psi.util;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * @author jansorg

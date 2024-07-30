@@ -20,12 +20,10 @@ import com.ansorgit.plugins.bash.lang.lexer.BashLexer;
 import com.ansorgit.plugins.bash.lang.lexer.BashTokenTypes;
 import com.ansorgit.plugins.bash.lang.psi.BashPsiCreator;
 import com.ansorgit.plugins.bash.lang.psi.impl.BashFileImpl;
-import com.ansorgit.plugins.bash.settings.BashProjectSettings;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.PsiParser;
 import com.intellij.lexer.Lexer;
-import com.intellij.openapi.project.Project;
 import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -45,20 +43,24 @@ public class BashParserDefinition implements ParserDefinition, BashElementTypes 
     private static final TokenSet stringLiterals = TokenSet.create(BashTokenTypes.STRING2, BashTokenTypes.INTEGER_LITERAL, BashTokenTypes.COLON, BashElementTypes.STRING_ELEMENT);
 
     @NotNull
-    public Lexer createLexer(Project project) {
-        return createBashLexer(project);
+    public Lexer createLexer() {
+        return createBashLexer();
     }
 
-    public static Lexer createBashLexer(Project project) {
-        return new BashLexer(findLanguageLevel(project));
+    public static Lexer createBashLexer() {
+        return new BashLexer(findLanguageLevel());
     }
 
-    public PsiParser createParser(Project project) {
-        return new BashParser(project, findLanguageLevel(project));
+    public PsiParser createParser() {
+        return new BashParser(findLanguageLevel());
     }
 
-    private static BashVersion findLanguageLevel(Project project) {
-        boolean supportBash4 = BashProjectSettings.storedSettings(project).isSupportBash4();
+    public static PsiParser createNewParser() {
+        return new BashParser(findLanguageLevel());
+    }
+
+    private static BashVersion findLanguageLevel() {
+        boolean supportBash4 = true;
         return supportBash4 ? BashVersion.Bash_v4 : BashVersion.Bash_v3;
     }
 

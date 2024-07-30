@@ -48,13 +48,13 @@ public abstract class BashCompositeElement extends CompositePsiElement implement
     @NotNull
     @Override
     public SearchScope getUseScope() {
-        return BashElementSharedImpl.getElementUseScope(this, getProject());
+        return BashElementSharedImpl.getElementUseScope(this);
     }
 
     @NotNull
     @Override
     public GlobalSearchScope getResolveScope() {
-        return BashElementSharedImpl.getElementGlobalSearchScope(this, getProject());
+        return BashElementSharedImpl.getElementGlobalSearchScope(this);
     }
 
     @Override

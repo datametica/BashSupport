@@ -104,7 +104,7 @@ public class BashHereDocStartMarkerImpl extends AbstractHeredocMarker implements
         protected PsiElement createMarkerElement(String name) {
             //wrap the new name in the same context as the current marker, i.e. EOF becomes "EOF" if it is a new name for "NAME"
             String newName = HeredocSharedImpl.wrapMarker(name, marker.getText());
-            return BashPsiElementFactory.createHeredocStartMarker(marker.getProject(), newName);
+            return BashPsiElementFactory.createHeredocStartMarker( newName);
         }
     }
 }

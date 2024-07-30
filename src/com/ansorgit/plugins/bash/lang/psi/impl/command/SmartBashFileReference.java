@@ -48,7 +48,7 @@ class SmartBashFileReference extends AbstractBashFileReference {
         String fileName = PathUtil.getFileName(referencedName);
         GlobalSearchScope scope = BashSearchScopes.moduleScope(cmd.getContainingFile());
 
-        PsiFileSystemItem[] files = FilenameIndex.getFilesByName(cmd.getProject(), fileName, scope, false);
+        PsiFileSystemItem[] files = FilenameIndex.getFilesByName(fileName, scope, false);
         if (files.length == 0) {
             return null;
         }

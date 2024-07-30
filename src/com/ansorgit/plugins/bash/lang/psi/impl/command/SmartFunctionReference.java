@@ -21,7 +21,6 @@ import com.ansorgit.plugins.bash.lang.psi.api.ResolveProcessor;
 import com.ansorgit.plugins.bash.lang.psi.api.function.BashFunctionDef;
 import com.ansorgit.plugins.bash.lang.psi.stubs.index.BashFunctionNameIndex;
 import com.google.common.collect.Lists;
-import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.ResolveState;
@@ -55,11 +54,11 @@ class SmartFunctionReference extends AbstractFunctionReference {
 
         final ResolveProcessor processor = new BashFunctionProcessor(referencedName);
 
-        Project project = cmd.getProject();
+
         PsiFile currentFile = cmd.getContainingFile();
 
         GlobalSearchScope allFiles = FileInclusionManager.includedFilesUnionScope(currentFile);
-        Collection<BashFunctionDef> functionDefs = StubIndex.getElements(BashFunctionNameIndex.KEY, referencedName, project, allFiles, BashFunctionDef.class);
+        Collection<BashFunctionDef> functionDefs = StubIndex.getElements(BashFunctionNameIndex.KEY, referencedName, allFiles, BashFunctionDef.class);
 
         ResolveState initial = ResolveState.initial();
         for (BashFunctionDef functionDef : functionDefs) {
@@ -68,7 +67,7 @@ class SmartFunctionReference extends AbstractFunctionReference {
 
         //find include commands which are relevant for the start element
         if (!processor.hasResults()) {
-            Set<BashFile> includingFiles = FileInclusionManager.findIncluders(project, currentFile);
+            Set<BashFile> includingFiles = FileInclusionManager.findIncluders(currentFile);
 
             List<GlobalSearchScope> scopes = Lists.newLinkedList();
             for (BashFile file : includingFiles) {
@@ -78,7 +77,7 @@ class SmartFunctionReference extends AbstractFunctionReference {
             if (!scopes.isEmpty()) {
                 GlobalSearchScope scope = GlobalSearchScope.union(scopes.toArray(new GlobalSearchScope[scopes.size()]));
 
-                functionDefs = StubIndex.getElements(BashFunctionNameIndex.KEY, referencedName, project, scope, BashFunctionDef.class);
+                functionDefs = StubIndex.getElements(BashFunctionNameIndex.KEY, referencedName, scope, BashFunctionDef.class);
 
                 for (BashFunctionDef def : functionDefs) {
                     processor.execute(def, initial);

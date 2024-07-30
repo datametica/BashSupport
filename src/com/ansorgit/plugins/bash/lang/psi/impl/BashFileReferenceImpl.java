@@ -16,6 +16,7 @@
 package com.ansorgit.plugins.bash.lang.psi.impl;
 
 import com.ansorgit.plugins.bash.lang.psi.BashVisitor;
+import com.ansorgit.plugins.bash.lang.psi.UtilityClassNew;
 import com.ansorgit.plugins.bash.lang.psi.api.BashCharSequence;
 import com.ansorgit.plugins.bash.lang.psi.api.BashFileReference;
 import com.ansorgit.plugins.bash.lang.psi.util.BashPsiFileUtils;
@@ -131,7 +132,7 @@ public class BashFileReferenceImpl extends BashBaseElement implements BashFileRe
         }
 
         public boolean isReferenceTo(PsiElement element) {
-            return PsiManager.getInstance(element.getProject()).areElementsEquivalent(element, resolve());
+            return new UtilityClassNew().areElementsEquivalent(element, resolve());
         }
 
         @NotNull

@@ -16,28 +16,26 @@
 package com.ansorgit.plugins.bash.lang.parser.eval;
 
 import com.ansorgit.plugins.bash.file.BashFileType;
-import com.ansorgit.plugins.bash.settings.BashProjectSettings;
+/*import com.ansorgit.plugins.bash.settings.BashProjectSettings;*/
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.LanguageParserDefinitions;
 import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lexer.Lexer;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.TokenType;
-import com.intellij.psi.tree.ILazyParseableElementType;
+import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 
-public class BashEvalElementType extends ILazyParseableElementType {
+public class BashEvalElementType extends IElementType {
     public BashEvalElementType() {
         super("eval block", BashFileType.BASH_LANGUAGE);
     }
 
-    @Override
     protected ASTNode doParseContents(@NotNull ASTNode chameleon, @NotNull PsiElement psi) {
-        Project project = psi.getProject();
-        boolean supportEvalEscapes = BashProjectSettings.storedSettings(project).isEvalEscapesEnabled();
+        //Project project = psi.getProject();
+        boolean supportEvalEscapes = false;//BashProjectSettings.storedSettings(project).isEvalEscapesEnabled();
 
         String originalText = chameleon.getChars().toString();
         ParserDefinition def = LanguageParserDefinitions.INSTANCE.forLanguage(BashFileType.BASH_LANGUAGE);
@@ -70,17 +68,16 @@ public class BashEvalElementType extends ILazyParseableElementType {
         textProcessor.decode(content, unescapedContent);
 
         Lexer lexer = isUnquoted
-                ? def.createLexer(project)
-                : new PrefixSuffixAddingLexer(def.createLexer(project), prefix, TokenType.WHITE_SPACE, suffix, TokenType.WHITE_SPACE);
+                ? def.createLexer()
+                : new PrefixSuffixAddingLexer(def.createLexer(), prefix, TokenType.WHITE_SPACE, suffix, TokenType.WHITE_SPACE);
 
-        PsiBuilder psiBuilder = new UnescapingPsiBuilder(project,
-                def,
+        PsiBuilder psiBuilder = new UnescapingPsiBuilder(def,
                 lexer,
                 chameleon,
                 originalText,
                 prefix + unescapedContent + suffix,
                 textProcessor);
 
-        return def.createParser(project).parse(this, psiBuilder).getFirstChildNode();
+        return def.createParser().parse(this, psiBuilder).getFirstChildNode();
     }
 }

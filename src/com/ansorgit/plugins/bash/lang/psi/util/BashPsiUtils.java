@@ -29,7 +29,6 @@ import com.ansorgit.plugins.bash.lang.psi.api.loops.BashFor;
 import com.ansorgit.plugins.bash.lang.psi.api.vars.BashVar;
 import com.ansorgit.plugins.bash.lang.psi.api.word.BashWord;
 import com.ansorgit.plugins.bash.lang.psi.eval.BashEvalBlock;
-import com.ansorgit.plugins.bash.lang.psi.stubs.index.BashIncludeCommandIndex;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.intellij.lang.ASTNode;
@@ -38,8 +37,7 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.CompositeElement;
 import com.intellij.psi.scope.PsiScopeProcessor;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.stubs.StubIndex;
+//import com.intellij.psi.stubs.StubIndex;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtilCore;
@@ -47,7 +45,6 @@ import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -311,13 +308,13 @@ public final class BashPsiUtils {
     public static Set<PsiFile> findIncludedFiles(PsiFile file, boolean followNestedFiles) {
         Set<PsiFile> files = Sets.newLinkedHashSet();
 
-        collectIncludedFiles(file, files, followNestedFiles);
+        //collectIncludedFiles(file, files, followNestedFiles);
 
         return files;
     }
 
     public static void collectIncludedFiles(PsiFile file, Set<PsiFile> files, boolean followNestedFiles) {
-        String filePath = file.getVirtualFile().getPath();
+        /*String filePath = file.getVirtualFile().getPath();
 
         Collection<BashIncludeCommand> commands = StubIndex.getElements(BashIncludeCommandIndex.KEY, filePath, file.getProject(), GlobalSearchScope.fileScope(file), BashIncludeCommand.class);
         for (BashIncludeCommand command : commands) {
@@ -330,7 +327,7 @@ public final class BashPsiUtils {
                     collectIncludedFiles(includedFile, files, true);
                 }
             }
-        }
+        }*/
     }
 
     /**
@@ -345,12 +342,12 @@ public final class BashPsiUtils {
 
         List<BashIncludeCommand> result = Lists.newLinkedList();
 
-        Collection<BashIncludeCommand> commands = StubIndex.getElements(BashIncludeCommandIndex.KEY, filePath, file.getProject(), GlobalSearchScope.fileScope(file), BashIncludeCommand.class);
+        /*Collection<BashIncludeCommand> commands = StubIndex.getElements(BashIncludeCommandIndex.KEY, filePath, file.getProject(), GlobalSearchScope.fileScope(file), BashIncludeCommand.class);
         for (BashIncludeCommand command : commands) {
             if (filterByFile == null || filterByFile.equals(findIncludedFile(command))) {
                 result.add(command);
             }
-        }
+        }*/
 
         return result;
     }
@@ -513,7 +510,7 @@ public final class BashPsiUtils {
     }
 
     public static boolean isInjectedElement(@NotNull PsiElement element) {
-        InjectedLanguageManager languageManager = InjectedLanguageManager.getInstance(element.getProject());
+        InjectedLanguageManager languageManager = InjectedLanguageManager.getInstance();
         return languageManager.isInjectedFragment(element.getContainingFile()) || hasInjectionHostParent(element);
     }
 
@@ -526,15 +523,15 @@ public final class BashPsiUtils {
      */
     public static int getFileTextOffset(@NotNull PsiElement element) {
         int offset = element.getTextOffset();
-        if (isInjectedElement(element)) {
+        /*if (isInjectedElement(element)) {
             //fixme languageManager is probably expensive
-            InjectedLanguageManager languageManager = InjectedLanguageManager.getInstance(element.getProject());
+            InjectedLanguageManager languageManager = InjectedLanguageManager.getInstance();
 
             PsiLanguageInjectionHost injectionHost = languageManager.getInjectionHost(element);
             if (injectionHost != null) {
                 offset += injectionHost.getTextOffset();
             }
-        }
+        }*/
 
         return offset;
     }

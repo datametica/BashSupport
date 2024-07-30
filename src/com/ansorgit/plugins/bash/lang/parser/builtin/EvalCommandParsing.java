@@ -30,7 +30,7 @@ import com.intellij.psi.tree.TokenSet;
 class EvalCommandParsing implements ParsingFunction, ParsingTool {
     //this is a simple definition of allowed tokens per eval-code-block
     private static final TokenSet accepted = TokenSet.create(STRING2, ASSIGNMENT_WORD, EQ, WORD, VARIABLE, DOLLAR,
-            LEFT_CURLY, RIGHT_CURLY);
+            LEFT_CURLY, RIGHT_CURLY, RIGHT_SQUARE, LEFT_SQUARE, PARAM_EXPANSION_OP_STAR, PARAM_EXPANSION_OP_HASH);
 
     @Override
     public boolean isValid(BashPsiBuilder builder) {

@@ -26,13 +26,10 @@ import com.ansorgit.plugins.bash.lang.psi.api.heredoc.BashHereDocStartMarker;
 import com.ansorgit.plugins.bash.lang.psi.api.vars.BashComposedVar;
 import com.ansorgit.plugins.bash.lang.psi.api.vars.BashVar;
 import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiComment;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiFileFactory;
+import com.intellij.psi.*;
+import com.intellij.psi.impl.PsiFileFactoryImpl;
 import com.intellij.psi.util.PsiTreeUtil;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -41,45 +38,45 @@ import org.jetbrains.annotations.NotNull;
 public class BashPsiElementFactory {
     private static final String TEMP_FILE_NAME = "__.sh";
 
-    public static PsiFile createDummyBashFile(Project project, String text) {
-        return createFileFromText(project, TEMP_FILE_NAME, BashFileType.BASH_FILE_TYPE, text);
+    public static PsiFile createDummyBashFile(String text) {
+        return createFileFromText(TEMP_FILE_NAME, BashFileType.BASH_FILE_TYPE, text);
     }
 
-    public static PsiElement createFileReference(Project project, String content) {
-        PsiElement firstChild = createDummyBashFile(project, ". " + content).getFirstChild();
+    public static PsiElement createFileReference(String content) {
+        PsiElement firstChild = createDummyBashFile(". " + content).getFirstChild();
 
         return ((BashIncludeCommand) firstChild).getFileReference();
     }
 
-    public static PsiElement createSymbol(Project project, String name) {
-        final PsiElement functionElement = createDummyBashFile(project, name + "() { x; }");
+    public static PsiElement createSymbol(String name) {
+        final PsiElement functionElement = createDummyBashFile(name + "() { x; }");
         return functionElement.getFirstChild().getFirstChild();
     }
 
-    public static PsiElement createWord(Project project, String name) {
-        return createDummyBashFile(project, name).getFirstChild().getFirstChild().getFirstChild();
+    public static PsiElement createWord(String name) {
+        return createDummyBashFile(name).getFirstChild().getFirstChild().getFirstChild();
     }
 
-    public static BashGenericCommand createCommand(Project project, String command) {
-        return (BashGenericCommand) createDummyBashFile(project, command).getFirstChild().getFirstChild();
+    public static BashGenericCommand createCommand(String command) {
+        return (BashGenericCommand) createDummyBashFile(command).getFirstChild().getFirstChild();
     }
 
-    public static BashString createString(Project project, String content) {
+    public static BashString createString(String content) {
         String fileContent = content.startsWith("\"") && content.endsWith("\"") ? content : ("\"" + content + "\"");
-        return PsiTreeUtil.findChildOfType(createDummyBashFile(project, fileContent), BashString.class);
+        return PsiTreeUtil.findChildOfType(createDummyBashFile(fileContent), BashString.class);
     }
 
-    public static PsiElement createAssignmentWord(Project project, String name) {
-        final PsiElement assignmentCommand = createDummyBashFile(project, name + "=a").getFirstChild();
+    public static PsiElement createAssignmentWord(String name) {
+        final PsiElement assignmentCommand = createDummyBashFile(name + "=a").getFirstChild();
 
         return assignmentCommand.getFirstChild().getFirstChild();
     }
 
-    public static PsiElement createVariable(Project project, String name, boolean withBraces) {
+    public static PsiElement createVariable(String name, boolean withBraces) {
         if (withBraces) {
             final PsiElement[] result = new PsiElement[1];
 
-            BashPsiUtils.visitRecursively(createComposedVar(project, name), new BashVisitor() {
+            BashPsiUtils.visitRecursively(createComposedVar(name), new BashVisitor() {
                 @Override
                 public void visitVarUse(BashVar var) {
                     result[0] = var;
@@ -90,14 +87,14 @@ public class BashPsiElementFactory {
         }
 
         String text = "$" + name;
-        PsiElement command = createDummyBashFile(project, text).getFirstChild().getFirstChild();
+        PsiElement command = createDummyBashFile(text).getFirstChild().getFirstChild();
 
         return command.getFirstChild().getFirstChild();
     }
 
-    public static PsiElement createComposedVar(Project project, String varName) {
+    public static PsiElement createComposedVar(String varName) {
         String text = "${" + varName + "}";
-        PsiElement command = createDummyBashFile(project, text).getFirstChild().getFirstChild();
+        PsiElement command = createDummyBashFile(text).getFirstChild().getFirstChild();
 
         final PsiElement[] result = new PsiElement[1];
 
@@ -111,42 +108,42 @@ public class BashPsiElementFactory {
         return result[0];
     }
 
-    public static PsiElement createShebang(Project project, String command, boolean addNewline) {
+    public static PsiElement createShebang(String command, boolean addNewline) {
         String text = "#!" + command + (addNewline ? "\n" : "");
-        return createDummyBashFile(project, text).getFirstChild();
+        return createDummyBashFile(text).getFirstChild();
     }
 
-    public static PsiElement createNewline(Project project) {
+    public static PsiElement createNewline() {
         String text = "\n";
-        return createDummyBashFile(project, text).getFirstChild();
+        return createDummyBashFile(text).getFirstChild();
     }
 
-    public static PsiComment createComment(Project project, String comment) {
+    public static PsiComment createComment(String comment) {
         String text = "#" + comment + "\n";
 
-        PsiFile file = createDummyBashFile(project, text);
+        PsiFile file = createDummyBashFile(text);
         return PsiTreeUtil.getChildOfType(file, PsiComment.class);
     }
 
-    public static PsiElement createHeredocStartMarker(Project project, String name) {
+    public static PsiElement createHeredocStartMarker(String name) {
         String data = String.format("cat << %s\n%s", name, name);
-        return PsiTreeUtil.findChildOfType(createDummyBashFile(project, data), BashHereDocStartMarker.class);
+        return PsiTreeUtil.findChildOfType(createDummyBashFile(data), BashHereDocStartMarker.class);
     }
 
-    public static PsiElement createHeredocEndMarker(Project project, String name, int leadingTabs) {
+    public static PsiElement createHeredocEndMarker( String name, int leadingTabs) {
         String data = String.format("cat <<- %s\n%s", name, StringUtils.repeat("\t", leadingTabs) + name);
-        return PsiTreeUtil.findChildOfType(createDummyBashFile(project, data), BashHereDocEndMarker.class);
+        return PsiTreeUtil.findChildOfType(createDummyBashFile(data), BashHereDocEndMarker.class);
     }
 
-    public static PsiElement createHeredocContent(Project project, String content) {
+    public static PsiElement createHeredocContent( String content) {
         String markerName = "_BASH_EOF_";
 
         String data = String.format("cat << %s\n%s\n%s", markerName, content, markerName);
-        return PsiTreeUtil.findChildOfType(createDummyBashFile(project, data), BashHereDoc.class);
+        return PsiTreeUtil.findChildOfType(createDummyBashFile(data), BashHereDoc.class);
     }
 
     @NotNull
-    private static PsiFile createFileFromText(@NotNull final Project project, @NotNull final String name, @NotNull final FileType fileType, @NotNull final String text) {
-        return PsiFileFactory.getInstance(project).createFileFromText(name, fileType, text);
+    private static PsiFile createFileFromText(@NotNull final String name, @NotNull final FileType fileType, @NotNull final String text) {
+        return new PsiFileFactoryImpl().createFileFromText(name, fileType, text);
     }
 }
