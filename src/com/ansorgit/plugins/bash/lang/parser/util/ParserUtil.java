@@ -34,7 +34,7 @@ import java.util.function.Predicate;
  */
 public class ParserUtil {
     @NonNls
-    private static final String BUNDLE = "bash.bash";
+    private static final String BUNDLE = "com.ansorgit.plugins.bash.bash";
 
     public static void errorToken(PsiBuilder builder, @PropertyKey(resourceBundle = BUNDLE) String message) {
         PsiBuilder.Marker marker = builder.mark();
