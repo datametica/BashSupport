@@ -26,6 +26,7 @@ abstract class AbstractBashPsiTreeTest {
             content
         )
         val ast = BashParserDefinition.createNewParser().parse(BashStubFileElementType(), builder)
+
         val actualPsiTree = DebugUtil.psiToString(ast.psi, false)
 
         Assertions.assertEquals(expectedPsiTreeContent, actualPsiTree)
