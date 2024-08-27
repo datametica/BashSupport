@@ -65,6 +65,8 @@ public class CoreASTFactory extends ASTFactory implements DefaultASTFactory {
   private static ParserDefinition getParserDefinition(Language lang) {
     if (lang.getClass() == BashLanguage.class)
       return new BashParserDefinition();
+    if (lang.getClass() == Language.ANY.getClass())
+      return null;
     return LanguageParserDefinitions.INSTANCE.forLanguage(lang);
   }
 
