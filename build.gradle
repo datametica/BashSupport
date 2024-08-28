@@ -31,7 +31,9 @@ dependencies {
 
     implementation("org.apache.commons:commons-lang3:3.14.0")
 
-    implementation('com.jetbrains.intellij.platform:util-jdom:241.18034.82')
+    implementation('com.jetbrains.intellij.platform:util-jdom:241.18034.82') {
+        exclude(group:'jaxen', module:'jaxen')
+    }
 
     implementation('org.iq80.snappy:snappy:0.5') {
         exclude(group:'org.xerial.snappy', module:'snappy-java')
@@ -48,6 +50,10 @@ dependencies {
         version {
             strictly("32.0.1-jre")
         }
+        exclude(group:'com.google.code.findbugs', module: 'jsr305')
+        exclude(group:'org.checkerframework', module: 'checker-qual')
+        exclude(group:'com.google.errorprone', module:'error_prone_annotations')
+        exclude(group:'com.google.j2objc', module:'j2objc-annotations')
     }
 }
 
