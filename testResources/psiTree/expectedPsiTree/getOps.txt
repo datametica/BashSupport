@@ -30,7 +30,7 @@ ASTWrapperPsiElement(FILE)
     PsiWhiteSpace(' ')
     [PSI] bash combined word
       [PSI] Bash-var
-        PsiElement([Bash] variable)('$OPTARG')
+        PsiElement([Bash] variable)('$ARGP')
   PsiElement([Bash] ;)(';')
   PsiElement([Bash] linefeed)('\n')
   [PSI] Simple command
@@ -64,7 +64,7 @@ ASTWrapperPsiElement(FILE)
     PsiWhiteSpace(' ')
     [PSI] bash combined word
       [PSI] Bash-var
-        PsiElement([Bash] variable)('$OPTARG')
+        PsiElement([Bash] variable)('$ARGP')
   PsiElement([Bash] ;)(';')
   PsiElement([Bash] linefeed)('\n')
   [PSI] Simple command
@@ -98,5 +98,5 @@ ASTWrapperPsiElement(FILE)
     PsiWhiteSpace(' ')
     [PSI] bash combined word
       [PSI] Bash-var
-        PsiElement([Bash] variable)('$OPTARG')
+        PsiElement([Bash] variable)('$ARGP')
   PsiElement([Bash] ;)(';')

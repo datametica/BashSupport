@@ -53,4 +53,10 @@ class ArithmeticExprTest: AbstractBashPsiTreeTest() {
         assertPsiTree(shellContent, File("testResources/psiTree/expectedPsiTree/variableOperator.txt").readText())
     }
 
+    @Test
+    fun arithmeticCompoundComparison() {
+        val shellCommand = File("testResources/psiTree/scripts/arithmeticCompoundComparison.txt").readText()
+
+        assertPsiTree(shellCommand, File("testResources/psiTree/expectedPsiTree/arithmeticCompoundComparison.txt").readText())
+    }
 }

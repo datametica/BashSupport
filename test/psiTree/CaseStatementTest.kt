@@ -8,7 +8,7 @@ class CaseStatementTest: AbstractBashPsiTreeTest() {
     fun `case Statement With Regex In Lable`() {
         val shellCommand = """
       |case variable in 
-      |(@(+([0-9])*(ST|ND|RD|TH)_PRIOR_RUN)) echo "Regex Pattern Matched !";
+      |(@(+([0-9])*(RT|FG|RD|TH)_ABC_FDE)) echo "Regex Pattern Matched !";
       |;;
       |esac
       |""".trimMargin()
@@ -26,7 +26,7 @@ class CaseStatementTest: AbstractBashPsiTreeTest() {
                                            |      PsiElement([Bash] ()('(')
                                            |      [PSI] BashCasePattern
                                            |        [PSI] bash combined word
-                                           |          PsiElement([Bash] word)('@(+([0-9])*(ST|ND|RD|TH)_PRIOR_RUN)')
+                                           |          PsiElement([Bash] word)('@(+([0-9])*(RT|FG|RD|TH)_ABC_FDE)')
                                            |      PsiElement([Bash] ))(')')
                                            |      PsiWhiteSpace(' ')
                                            |      [PSI] PsiElement(logical block)

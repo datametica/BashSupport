@@ -6,12 +6,12 @@ class WildcardOperatorPatternTest : AbstractBashPsiTreeTest() {
 
   @Test
   fun `Wildcard Operator Pattern Test`() {
-    val shellCommand = "[[ \'ENOTIFY\' == @(*NOTIFY*) ]]".trimMargin()
+    val shellCommand = "[[ \'ABCD\' == @(*BCD*) ]]".trimMargin()
     val expectedASTNodeString: String = """ASTWrapperPsiElement(FILE)
                                               |  [PSI] PsiElement(extended conditional shellcommand)
                                               |    PsiElement([Bash] [[ (left bracket))('[[ ')
                                               |    [PSI] bash combined word
-                                              |      PsiElement([Bash] unevaluated string (STRING2))(''ENOTIFY'')
+                                              |      PsiElement([Bash] unevaluated string (STRING2))(''ABCD'')
                                               |    PsiWhiteSpace(' ')
                                               |    PsiElement([Bash] cond_op ==)('==')
                                               |    PsiWhiteSpace(' ')
@@ -23,7 +23,7 @@ class WildcardOperatorPatternTest : AbstractBashPsiTreeTest() {
                                               |          [PSI] Simple command
                                               |            [PSI] BashGenericCommand
                                               |              [PSI] bash combined word
-                                              |                PsiElement([Bash] word)('*NOTIFY*')
+                                              |                PsiElement([Bash] word)('*BCD*')
                                               |          PsiElement([Bash] ))(')')
                                               |    PsiElement([Bash] ]] (right bracket))(' ]]')
                                               |""".trimMargin()
@@ -32,9 +32,9 @@ class WildcardOperatorPatternTest : AbstractBashPsiTreeTest() {
 
   @Test
   fun `Wildcard Operator in comment Test`() {
-    val shellCommand = "# \"@(#)sort.csh\"".trimMargin()
+    val shellCommand = "# \"@(#)demo.csh\"".trimMargin()
     val expectedASTNodeString: String = """ASTWrapperPsiElement(FILE)
-                                              |  PsiComment([Bash] Comment)('# "@(#)sort.csh"')
+                                              |  PsiComment([Bash] Comment)('# "@(#)demo.csh"')
                                               |""".trimMargin()
     assertPsiTree(shellCommand, expectedASTNodeString)
   }

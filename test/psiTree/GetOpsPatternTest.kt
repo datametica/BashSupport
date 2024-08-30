@@ -8,13 +8,13 @@ class GetOpsPatternTest : AbstractBashPsiTreeTest() {
   @Test
   fun `getOps pattern Test1`() {
     val shellCommand =
-      """-f@(BASE|DELTA)_TARGET_RXPRES.*.[0-9][0-9][0-9][0-9][0-9] -d|""".trimMargin()
+      """-f@(AE|FGH)_START_AD.*.[0-9][0-9][0-9][0-9][0-9] -d|""".trimMargin()
 
     val expectedAstNodeString: String = """ASTWrapperPsiElement(FILE)
                                           |  [PSI] Simple command
                                           |    [PSI] BashGenericCommand
                                           |      [PSI] bash combined word
-                                          |        PsiElement([Bash] word)('-f@(BASE|DELTA)_TARGET_RXPRES.*.[0-9][0-9][0-9][0-9][0-9]')
+                                          |        PsiElement([Bash] word)('-f@(AE|FGH)_START_AD.*.[0-9][0-9][0-9][0-9][0-9]')
                                           |    PsiWhiteSpace(' ')
                                           |    [PSI] bash combined word
                                           |      PsiElement([Bash] word)('-d|')

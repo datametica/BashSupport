@@ -1,9 +1,9 @@
 getopts "cd:" opt;
 echo $opt;
-echo $OPTARG;
+echo $ARGP;
 getopts "cd:" opt;
 echo $opt;
-echo $OPTARG;
+echo $ARGP;
 getopts "cd:" opt;
 echo $opt;
-echo $OPTARG;
+echo $ARGP;

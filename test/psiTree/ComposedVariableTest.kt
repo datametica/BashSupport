@@ -7,14 +7,14 @@ class ComposedVariableTest: AbstractBashPsiTreeTest() {
     @Test
     @Throws(Exception::class)
     fun composedVariableTest() {
-        val shellContent = """PROG=${'$'}{0##*/}
-                            |PROG=${'$'}{PROG%.*}
+        val shellContent = """VAR=${'$'}{0##*/}
+                            |VAR=${'$'}{VAR%.*}
                             |""".trimMargin()
 
         val expectedPsiTree = """ASTWrapperPsiElement(FILE)
 |  [PSI] Simple command
 |    [PSI] Bash var def
-|      PsiElement([Bash] assignment_word)('PROG')
+|      PsiElement([Bash] assignment_word)('VAR')
 |      PsiElement([Bash] =)('=')
 |      [PSI] bash combined word
 |        [PSI] BashComposedVar
@@ -28,14 +28,14 @@ class ComposedVariableTest: AbstractBashPsiTreeTest() {
 |  PsiElement([Bash] linefeed)('\n')
 |  [PSI] Simple command
 |    [PSI] Bash var def
-|      PsiElement([Bash] assignment_word)('PROG')
+|      PsiElement([Bash] assignment_word)('VAR')
 |      PsiElement([Bash] =)('=')
 |      [PSI] bash combined word
 |        [PSI] BashComposedVar
 |          PsiElement([Bash] ${'$'})('${'$'}')
 |          PsiElement([Bash] {)('{')
 |          [PSI] Bash-var
-|            PsiElement([Bash] word)('PROG')
+|            PsiElement([Bash] word)('VAR')
 |          PsiElement([Bash] Parameter expansion operator '%')('%')
 |          PsiElement([Bash] word)('.*')
 |          PsiElement([Bash] })('}')

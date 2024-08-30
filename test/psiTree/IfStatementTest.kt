@@ -228,12 +228,4 @@ class IfStatementTest: AbstractBashPsiTreeTest() {
 
         assertPsiTree(shellCommand, expectedASTNodeString)
     }
-
-    @Test
-    fun arithmeticCompoundComparison() {
-        val shellCommand = File("testResources/psiTree/scripts/arithmeticCompoundComparison.txt").readText()
-
-        assertPsiTree(shellCommand, File("testResources/psiTree/expectedPsiTree/arithmeticCompoundComparison.txt").readText())
-    }
-
 }
