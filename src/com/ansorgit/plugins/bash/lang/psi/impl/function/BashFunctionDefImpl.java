@@ -37,12 +37,11 @@ import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.psi.stubs.IStubElementType;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.PlatformIcons;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.*;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -90,7 +89,7 @@ public class BashFunctionDefImpl extends BashBaseStubElementImpl<BashFunctionDef
             throw new IncorrectOperationException("invalid name");
         }
 
-        final PsiElement newNameSymbol = BashPsiElementFactory.createSymbol(getProject(), name);
+        final PsiElement newNameSymbol = BashPsiElementFactory.createSymbol(name);
 
         getNode().replaceChild(nameNode.getNode(), newNameSymbol.getNode());
         return this;
@@ -177,19 +176,9 @@ public class BashFunctionDefImpl extends BashBaseStubElementImpl<BashFunctionDef
         return symbol == null ? "" : symbol.getNameString();
     }
 
-    @Override
-    public Icon getIcon(int flags) {
-        return PlatformIcons.METHOD_ICON;
-    }
-
     public int getTextOffset() {
         final ASTNode name = getNameSymbol().getNode();
         return name != null ? name.getStartOffset() : super.getTextOffset();
-    }
-
-    @Override
-    public ItemPresentation getPresentation() {
-        return presentation;
     }
 
     public PsiElement getNameIdentifier() {
@@ -229,8 +218,5 @@ public class BashFunctionDefImpl extends BashBaseStubElementImpl<BashFunctionDef
             return null;
         }
 
-        public Icon getIcon(boolean open) {
-            return null;
-        }
     }
 }

@@ -16,7 +16,7 @@
 package com.ansorgit.plugins.bash.lang.util;
 
 import com.intellij.openapi.util.Pair;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 /**

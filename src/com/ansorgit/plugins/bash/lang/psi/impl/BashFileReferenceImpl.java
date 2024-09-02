@@ -21,6 +21,7 @@ import com.ansorgit.plugins.bash.lang.psi.api.BashFileReference;
 import com.ansorgit.plugins.bash.lang.psi.util.BashPsiFileUtils;
 import com.ansorgit.plugins.bash.lang.psi.util.BashPsiUtils;
 import com.intellij.lang.ASTNode;
+import com.intellij.openapi.progress.ProgressIndicatorProvider;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.resolve.reference.impl.CachingReference;
@@ -131,7 +132,18 @@ public class BashFileReferenceImpl extends BashBaseElement implements BashFileRe
         }
 
         public boolean isReferenceTo(PsiElement element) {
-            return PsiManager.getInstance(element.getProject()).areElementsEquivalent(element, resolve());
+            return areElementsEquivalent(element, resolve());
+        }
+
+        private boolean areElementsEquivalent(PsiElement element1, PsiElement element2) {
+            ProgressIndicatorProvider.checkCanceled();
+            if (element1 == element2) {
+                return true;
+            } else if (element1 != null && element2 != null) {
+                return element1.equals(element2) || element1.isEquivalentTo(element2) || element2.isEquivalentTo(element1);
+            } else {
+                return false;
+            }
         }
 
         @NotNull

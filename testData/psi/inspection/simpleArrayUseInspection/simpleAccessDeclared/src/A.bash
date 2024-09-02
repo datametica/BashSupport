@@ -1,2 +1,0 @@
-declare -a a
-$a

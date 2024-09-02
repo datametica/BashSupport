@@ -1,1 +1,0 @@
-echo <caret>$LD_LIBRARY_PATH

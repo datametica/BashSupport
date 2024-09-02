@@ -1,1 +1,0 @@
-. fileUsage.bash

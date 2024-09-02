@@ -30,19 +30,15 @@ import com.ansorgit.plugins.bash.lang.psi.stubs.api.BashCommandStub;
 import com.ansorgit.plugins.bash.lang.psi.stubs.api.BashCommandStubBase;
 import com.ansorgit.plugins.bash.lang.psi.util.BashPsiUtils;
 import com.ansorgit.plugins.bash.lang.psi.util.BashResolveUtil;
-import com.ansorgit.plugins.bash.settings.BashProjectSettings;
 import com.google.common.collect.Lists;
 import com.intellij.lang.ASTNode;
-import com.intellij.navigation.ItemPresentation;
-import com.intellij.openapi.project.DumbService;
-import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.psi.stubs.IStubElementType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.*;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -137,7 +133,7 @@ public class AbstractBashCommand<T extends BashCommandStubBase> extends BashBase
     }
 
     public boolean isInternalCommand() {
-        return isInternalCommand(BashProjectSettings.storedSettings(getProject()).isSupportBash4());
+        return true/*isInternalCommand(BashProjectSettings.storedSettings(getProject()).isSupportBash4())*/;
     }
 
     public boolean isExternalCommand() {
@@ -287,25 +283,6 @@ public class AbstractBashCommand<T extends BashCommandStubBase> extends BashBase
     }
 
     @Override
-    public ItemPresentation getPresentation() {
-        //fixme caching?
-        return new ItemPresentation() {
-            public String getPresentableText() {
-                final PsiElement element = AbstractBashCommand.this.commandElement();
-                return element == null ? "unknown" : element.getText();
-            }
-
-            public String getLocationString() {
-                return null;
-            }
-
-            public Icon getIcon(boolean open) {
-                return null;
-            }
-        };
-    }
-
-    @Override
     public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull ResolveState
             state, PsiElement lastParent, @NotNull PsiElement place) {
         return PsiScopesUtil.walkChildrenScopes(this, processor, state, lastParent, place);
@@ -319,9 +296,9 @@ public class AbstractBashCommand<T extends BashCommandStubBase> extends BashBase
      * @return returns whether the file containing this command is indexed or whether a slow fallback is required to resolve the references contained in the file.
      */
     private boolean isSlowResolveRequired() {
-        Project project = getProject();
+        //Project project = getProject();
         PsiFile file = getContainingFile();
 
-        return DumbService.isDumb(project) || BashResolveUtil.isScratchFile(file) || BashResolveUtil.isNotIndexedFile(project, file.getVirtualFile());
+        return /*DumbService.isDumb(project) ||*/ BashResolveUtil.isScratchFile(file) || BashResolveUtil.isNotIndexedFile(/*project,*/ file.getVirtualFile());
     }
 }

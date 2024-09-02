@@ -108,7 +108,7 @@ public class BashHereDocEndMarkerImpl extends AbstractHeredocMarker implements B
                 leadingTabs++;
             }
 
-            return BashPsiElementFactory.createHeredocEndMarker(marker.getProject(), name, leadingTabs);
+            return BashPsiElementFactory.createHeredocEndMarker( name, leadingTabs);
         }
     }
 }

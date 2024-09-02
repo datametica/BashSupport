@@ -25,7 +25,6 @@ import com.ansorgit.plugins.bash.lang.psi.util.BashPsiUtils;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -43,27 +42,27 @@ public final class BashElementSharedImpl {
     private BashElementSharedImpl() {
     }
 
-    public static GlobalSearchScope getElementGlobalSearchScope(BashPsiElement element, Project project) {
+    public static GlobalSearchScope getElementGlobalSearchScope(BashPsiElement element) {
         PsiFile psiFile = BashPsiUtils.findFileContext(element);
         GlobalSearchScope currentFileScope = GlobalSearchScope.fileScope(psiFile);
 
         Set<PsiFile> includedFiles = FileInclusionManager.findIncludedFiles(psiFile, true, true);
         Collection<VirtualFile> files = Collections2.transform(includedFiles, psiToVirtualFile());
 
-        return currentFileScope.uniteWith(GlobalSearchScope.filesScope(project, files));
+        return currentFileScope.uniteWith(GlobalSearchScope.filesScope(files));
     }
 
-    public static SearchScope getElementUseScope(BashPsiElement element, Project project) {
+    public static SearchScope getElementUseScope(BashPsiElement element) {
         //all files which include this element's file belong to the requested scope
         //bash files can call other bash files, thus the scope needs to be the module scope at minumum
         //fixme can this be optimized?
         PsiFile currentFile = BashPsiUtils.findFileContext(element);
         if (currentFile == null) {
             //no other fallback possible here
-            return GlobalSearchScope.projectScope(project);
+            return GlobalSearchScope.projectScope();
         }
 
-        Set<BashFile> includers = FileInclusionManager.findIncluders(project, currentFile);
+        Set<BashFile> includers = FileInclusionManager.findIncluders(currentFile);
         Set<PsiFile> included = FileInclusionManager.findIncludedFiles(currentFile, true, true);
 
         //find all files which reference the source file
@@ -74,8 +73,7 @@ public final class BashElementSharedImpl {
                 Collection<BashCommand> commands = StubIndex.getElements(
                         BashCommandNameIndex.KEY,
                         searchedName,
-                        project,
-                        GlobalSearchScope.projectScope(project), //module scope isn't working as expected because it doesn't include non-src dirs
+                        GlobalSearchScope.projectScope(), //module scope isn't working as expected because it doesn't include non-src dirs
                         BashCommand.class);
                 if (commands != null) {
                     for (BashCommand command : commands) {
@@ -98,7 +96,7 @@ public final class BashElementSharedImpl {
         union.addAll(referencingScriptFiles);
 
         Collection<VirtualFile> virtualFiles = Collections2.transform(union, psiToVirtualFile());
-        return GlobalSearchScope.fileScope(currentFile).union(GlobalSearchScope.filesScope(project, virtualFiles));
+        return GlobalSearchScope.fileScope(currentFile).union(GlobalSearchScope.filesScope(virtualFiles));
     }
 
     public static boolean walkDefinitionScope(PsiElement thisElement, @NotNull PsiScopeProcessor processor, @NotNull ResolveState state, PsiElement lastParent, @NotNull PsiElement place) {

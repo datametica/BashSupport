@@ -103,7 +103,20 @@ public class BashFileImpl extends PsiFileBase implements BashFile {
     @NotNull
     @Override
     public SearchScope getUseScope() {
-        return BashElementSharedImpl.getElementUseScope(this, getProject());
+        /*return new SearchScope() {
+            @NotNull
+            @Override
+            public SearchScope intersectWith(@NotNull SearchScope searchScope) {
+                return null;
+            }
+
+            @NotNull
+            @Override
+            public SearchScope union(@NotNull SearchScope searchScope) {
+                return null;
+            }
+        };*/
+        return BashElementSharedImpl.getElementUseScope(this);
     }
 
     @Override

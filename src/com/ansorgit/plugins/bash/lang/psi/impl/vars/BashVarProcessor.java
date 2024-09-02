@@ -21,7 +21,6 @@ import com.ansorgit.plugins.bash.lang.psi.api.vars.BashVarDef;
 import com.ansorgit.plugins.bash.lang.psi.impl.Keys;
 import com.ansorgit.plugins.bash.lang.psi.util.BashAbstractProcessor;
 import com.ansorgit.plugins.bash.lang.psi.util.BashPsiUtils;
-import com.ansorgit.plugins.bash.settings.BashProjectSettings;
 import com.google.common.collect.Sets;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.util.Key;
@@ -56,7 +55,7 @@ public class BashVarProcessor extends BashAbstractProcessor implements Keys {
         this.collectAllDefinitions = collectAllDefinitions;
 
         this.ignoreGlobals = false;
-        this.functionVarDefsAreGlobal = BashProjectSettings.storedSettings(startElement.getProject()).isGlobalFunctionVarDefs();
+        this.functionVarDefsAreGlobal = false;//BashProjectSettings.storedSettings(startElement.getProject()).isGlobalFunctionVarDefs();
         this.startElementTextOffset = BashPsiUtils.getFileTextOffset(startElement);
     }
 

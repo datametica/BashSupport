@@ -20,9 +20,7 @@ import com.ansorgit.plugins.bash.lang.psi.api.ResolveProcessor;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
-import com.intellij.lang.injection.InjectedLanguageManager;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import org.jetbrains.annotations.NotNull;
 
@@ -127,13 +125,13 @@ public abstract class BashAbstractProcessor implements BashScopeProcessor, PsiSc
             for (PsiElement e : results.get(bestRating)) {
                 //if the element is injected compute the text offset in the real file
                 int textOffset = e.getTextOffset();
-                if (BashPsiUtils.isInjectedElement(e)) {
+                /*if (BashPsiUtils.isInjectedElement(e)) {
                     //fixme optimize this
                     PsiLanguageInjectionHost injectionHost = InjectedLanguageManager.getInstance(e.getProject()).getInjectionHost(e);
                     if (injectionHost != null) {
                         textOffset = textOffset + injectionHost.getTextOffset();
                     }
-                }
+                }*/
 
                 // comparing the offset is only meaningful within the same file
                 // for definitions in included files we need to compare against the offset of the include command

@@ -21,7 +21,6 @@ import com.ansorgit.plugins.bash.lang.psi.BashVisitor;
 import com.ansorgit.plugins.bash.lang.psi.api.BashCharSequence;
 import com.ansorgit.plugins.bash.lang.psi.api.BashPsiElement;
 import com.ansorgit.plugins.bash.lang.psi.api.BashReference;
-import com.ansorgit.plugins.bash.lang.psi.api.BashString;
 import com.ansorgit.plugins.bash.lang.psi.api.command.BashCommand;
 import com.ansorgit.plugins.bash.lang.psi.api.function.BashFunctionDef;
 import com.ansorgit.plugins.bash.lang.psi.api.vars.BashAssignmentList;
@@ -34,7 +33,6 @@ import com.ansorgit.plugins.bash.lang.psi.util.BashCommandUtil;
 import com.ansorgit.plugins.bash.lang.psi.util.BashIdentifierUtil;
 import com.ansorgit.plugins.bash.lang.psi.util.BashPsiElementFactory;
 import com.ansorgit.plugins.bash.lang.psi.util.BashPsiUtils;
-import com.ansorgit.plugins.bash.settings.BashProjectSettings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.intellij.lang.ASTNode;
@@ -130,7 +128,7 @@ public class BashVarDefImpl extends BashBaseStubElementImpl<BashVarDefStub> impl
         }
 
         PsiElement original = findAssignmentWord();
-        PsiElement replacement = BashPsiElementFactory.createAssignmentWord(getProject(), newName);
+        PsiElement replacement = BashPsiElementFactory.createAssignmentWord(newName);
         return BashPsiUtils.replaceElement(original, replacement);
     }
 
@@ -304,7 +302,7 @@ public class BashVarDefImpl extends BashBaseStubElementImpl<BashVarDefStub> impl
     @NotNull
     @Override
     public BashReference getReference() {
-        return DumbService.isDumb(getProject()) ? dumbReference : reference;
+        return DumbService.isDumb() ? dumbReference : reference;
     }
 
     @Nullable
@@ -347,7 +345,7 @@ public class BashVarDefImpl extends BashBaseStubElementImpl<BashVarDefStub> impl
     }
 
     public boolean isBuiltinVar() {
-        boolean isBash_v4 = BashProjectSettings.storedSettings(getProject()).isSupportBash4();
+        boolean isBash_v4 = true;//BashProjectSettings.storedSettings(getProject()).isSupportBash4();
 
         String varName = getReferenceName();
         boolean v3_var = bashShellVars.contains(varName) || bourneShellVars.contains(varName);

@@ -31,7 +31,7 @@ final class BashTokenRemapper implements ITokenTypeRemapper, BashTokenTypes {
     private static final TokenSet mappedToWord = TokenSet.create(
             ASSIGNMENT_WORD,
             LEFT_SQUARE, RIGHT_SQUARE,
-            IF_KEYWORD, THEN_KEYWORD, ELIF_KEYWORD, ELSE_KEYWORD, FI_KEYWORD,
+            IF_KEYWORD, THEN_KEYWORD, ELIF_KEYWORD, ELSE_KEYWORD, FI_KEYWORD, ENDIF_KEYWORD,
             WHILE_KEYWORD, DO_KEYWORD, DONE_KEYWORD,
             FOR_KEYWORD,
             FUNCTION_KEYWORD,

@@ -25,7 +25,7 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiFile;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -116,7 +116,7 @@ public class BashShebangImpl extends BashBaseElement implements BashShebang {
             document.replaceString(textRange.getStartOffset(), textRange.getEndOffset(), command);
         } else {
             //fallback
-            PsiElement newElement = BashPsiElementFactory.createShebang(getProject(), command, hasNewline());
+            PsiElement newElement = BashPsiElementFactory.createShebang(command, hasNewline());
             getNode().replaceChild(getNode().getFirstChildNode(), newElement.getNode());
         }
     }

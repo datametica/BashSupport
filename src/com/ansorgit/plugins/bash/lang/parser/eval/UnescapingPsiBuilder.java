@@ -14,7 +14,7 @@
  */
 package com.ansorgit.plugins.bash.lang.parser.eval;
 
-import com.intellij.embedding.MasqueradingLexer;
+//import com.intellij.embedding.MasqueradingLexer;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.ITokenTypeRemapper;
 import com.intellij.lang.ParserDefinition;
@@ -24,7 +24,7 @@ import com.intellij.lang.impl.PsiBuilderAdapter;
 import com.intellij.lang.impl.PsiBuilderImpl;
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.project.Project;
+//import com.intellij.openapi.project.Project;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
@@ -39,12 +39,12 @@ import java.util.List;
  * The text processing may only remove characters. It must not add any new characters.
  * Removed characters will be output as whitespace to the object using this PsiBuilde
  * <br>
- * === This is a copy of {@link com.intellij.embedding.MasqueradingPsiBuilderAdapter}. ===
+ * === This is a copy of { com.intellij.embedding.MasqueradingPsiBuilderAdapter}. ===
  * <br>
- * A delegate PsiBuilder that hides or substitutes some tokens (namely, the ones provided by {@link MasqueradingLexer})
+ * A delegate PsiBuilder that hides or substitutes some tokens (namely, the ones provided by { MasqueradingLexer})
  * from a parser, however, _still inserting_ them into a production tree in their initial appearance.
  *
- * @see MasqueradingLexer
+ *  MasqueradingLexer
  */
 public class UnescapingPsiBuilder extends PsiBuilderAdapter {
     private final static Logger LOG = Logger.getInstance(UnescapingPsiBuilder.class);
@@ -59,14 +59,13 @@ public class UnescapingPsiBuilder extends PsiBuilderAdapter {
     private IElementType currentRemapped;
     private ITokenTypeRemapper remapper;
 
-    public UnescapingPsiBuilder(@NotNull final Project project,
-                                @NotNull final ParserDefinition parserDefinition,
+    public UnescapingPsiBuilder(@NotNull final ParserDefinition parserDefinition,
                                 @NotNull final Lexer lexer,
                                 @NotNull final ASTNode chameleon,
                                 @NotNull final CharSequence originalText,
                                 @NotNull final CharSequence processedText,
                                 @NotNull final TextPreprocessor textProcessor) {
-        this(new PsiBuilderImpl(project, parserDefinition, lexer, chameleon, originalText), textProcessor, processedText);
+        this(new PsiBuilderImpl(parserDefinition, lexer, chameleon, originalText), textProcessor, processedText);
     }
 
     private UnescapingPsiBuilder(PsiBuilderImpl builder, TextPreprocessor textProcessor, CharSequence processedText) {

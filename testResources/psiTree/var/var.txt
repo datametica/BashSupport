@@ -1,0 +1,6 @@
+ASTWrapperPsiElement(FILE)
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        [PSI] Bash-var
+          PsiElement([Bash] variable)('$foo')

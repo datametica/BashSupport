@@ -1,0 +1,5 @@
+if [ "$num1" -lt "$num2" ] && [ "$num2" -lt "$num3" ]; then
+    echo "$num1 is less than $num2 AND $num2 is less than $num3"
+else
+    echo "The compound comparison (num1 < num2 AND num2 < num3) is false"
+fi

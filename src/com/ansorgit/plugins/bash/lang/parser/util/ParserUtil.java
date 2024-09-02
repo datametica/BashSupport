@@ -69,7 +69,7 @@ public class ParserUtil {
     }
 
     /**
-     * Same as {@link com.ansorgit.plugins.bash.lang.parser.util.ParserUtil#getTokenAndAdvance(com.ansorgit.plugins.bash.lang.parser.BashPsiBuilder, boolean)}
+     * Same as { com.ansorgit.plugins.bash.lang.parser.util.ParserUtil#getTokenAndAdvance(com.ansorgit.plugins.bash.lang.parser.BashPsiBuilder, boolean)}
      * but always disables the whitespace mode.
      *
      * @param builder Provides the tokens.

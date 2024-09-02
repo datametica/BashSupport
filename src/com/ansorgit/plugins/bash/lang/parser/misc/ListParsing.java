@@ -107,6 +107,28 @@ public final class ListParsing implements ParsingTool {
         return builder.eof() || optionalTerminator;
     }
 
+    public boolean parseCompoundListWithOptionalTerminator(final BashPsiBuilder builder, final boolean optionalTerminator, final boolean markAsFoldable, final IElementType optionalTerminatorType) {
+        final PsiBuilder.Marker optionalMarker = markAsFoldable ? builder.mark() : NullMarker.get();
+        builder.readOptionalNewlines();
+        if (!this.parseList1(builder, false, true)) {
+            optionalMarker.drop();
+            return false;
+        }
+        final IElementType token = builder.getTokenType();
+        if (token == ListParsing.SEMI || token == ListParsing.LINE_FEED || token == ListParsing.AMP) {
+            optionalMarker.done(ListParsing.LOGICAL_BLOCK_ELEMENT);
+            builder.advanceLexer();
+            builder.readOptionalNewlines();
+            return true;
+        }
+        if (token == optionalTerminatorType) {
+            optionalMarker.done(ListParsing.LOGICAL_BLOCK_ELEMENT);
+            return true;
+        }
+        optionalMarker.done(ListParsing.LOGICAL_BLOCK_ELEMENT);
+        return builder.eof() || optionalTerminator;
+    }
+
     public boolean parseList(BashPsiBuilder builder) {
         return parseCompoundList(builder, false, false);
     }

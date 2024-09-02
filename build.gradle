@@ -1,125 +1,80 @@
-buildscript {
-    dependencies {
-        // this is the version included in the earlies SDK we're supporting
-        // this is IJ 145.x, which includes Kotlin 1.0.3
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.7"
-    }
-}
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id "org.jetbrains.intellij" version "0.4.8"
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.22'
+    id "com.github.johnrengelman.shadow" version "7.1.2"
 }
 
 repositories {
-    maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
-
     mavenCentral()
+    maven {
+        url 'https://www.jetbrains.com/intellij-repository/releases/'
+    }
 }
 
-version = "${new File('pluginVersion.txt').getText('UTF-8')}"
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
-allprojects {
-    apply plugin: 'java'
-    apply plugin: 'kotlin'
+tasks.withType(KotlinCompile).configureEach {
+    kotlinOptions.jvmTarget = "17"
+}
 
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-    tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
+dependencies {
 
-    plugins.withType(JavaPlugin) {
-        test {
-            systemProperty "NO_FS_ROOTS_ACCESS_CHECK", "true"
-        }
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.22'
+    implementation 'org.jetbrains:annotations:24.1.0'
+
+    implementation('org.jetbrains.intellij.deps:trove4j:1.0.20200330')
+
+    implementation("org.apache.commons:commons-lang3:3.14.0")
+
+    implementation('com.jetbrains.intellij.platform:util-jdom:241.18034.82') {
+        exclude(group:'jaxen', module:'jaxen')
     }
 
-    compileKotlin {
-        kotlinOptions {
-            apiVersion = 1.0
-            languageVersion = 1.0
-            noStdlib = true
-            noReflect = true
-        }
+    implementation('org.iq80.snappy:snappy:0.5') {
+        exclude(group:'org.xerial.snappy', module:'snappy-java')
     }
 
-    sourceSets {
-        main {
-            java.srcDirs 'src'
-            resources.srcDir 'resources'
+    implementation 'org.xerial.snappy:snappy-java:1.1.10.5'
+
+    implementation("net.java.dev.jna:jna:5.14.0")
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation("com.google.guava:guava") {
+        version {
+            strictly("32.0.1-jre")
         }
-        test {
-            java.srcDir "test"
-            if (ideaBranch != null && ideaBranch != "" && ideaBranch.toInteger() >= 183) {
-                java.srcDirs += "test-183"
-            }
-            resources.srcDir 'testResources'
-        }
+        exclude(group:'com.google.code.findbugs', module: 'jsr305')
+        exclude(group:'org.checkerframework', module: 'checker-qual')
+        exclude(group:'com.google.errorprone', module:'error_prone_annotations')
+        exclude(group:'com.google.j2objc', module:'j2objc-annotations')
     }
+}
 
-    apply plugin: 'org.jetbrains.intellij'
-    intellij {
-        version ideaVersion
-        type "IC"
-        pluginName 'BashSupport'
-        plugins 'IntelliLang', 'terminal'
-        downloadSources Boolean.valueOf(sources)
+test {
+    useJUnitPlatform()
+}
 
-        patchPluginXml {
-            sinceBuild '145.0'
-            untilBuild '191.*'
-        }
-    }
+version = "1.7.14.145"
 
-    publishPlugin {
-        username 'wallaby'
-        password System.properties['intellij.publish.password']
-        channels pluginChannels
-    }
+shadowJar {
+    zip64 = true
+    archiveFileName.set("${project.name}-${project.version}.jar")
+}
 
-    apply plugin: 'jacoco'
-    jacoco {
-        toolVersion = "0.7.9"
-        reportsDir = file("$buildDir/reports/coverage")
+sourceSets {
+    main {
+        java.srcDirs 'src'
+        resources.srcDir 'resources'
     }
     test {
-        finalizedBy jacocoTestReport
-        jacoco {
-            enabled true
-            append false
-            includes ["com.ansorgit.*"]
-        }
-    }
-
-    ant.importBuild("build.xml")
-    task doJFlex(dependsOn: JavaPlugin.PROCESS_RESOURCES_TASK_NAME) {
-        doLast {
-            jflex
-        }
-    }
-
-    compileJava.dependsOn(doJFlex)
-
-    // test logging configuration, shows test progress and messages to standard error
-    // see https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/testing/logging/TestLogEvent.html
-    test {
-        testLogging {
-            events = [
-                org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
-                org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
-                org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED,
-                org.gradle.api.tasks.testing.logging.TestLogEvent.STANDARD_ERROR
-            ]
-        }
+        java.srcDir "test"
+        resources.srcDir 'testResources'
     }
 }
-
-task addPsiViewer {
-    if (ideaBranch != null && ideaBranch != "") {
-        def slurper = new groovy.json.JsonSlurper()
-        def psiVersions = slurper.parseText(psiViewerVersions)
-        def psiVersion = psiVersions[ideaBranch]
-        if (psiVersion != null) {
-            intellij.plugins += "PsiViewer:$psiVersion"
-        }
-    }
-}
-prepareSandbox.finalizedBy addPsiViewer

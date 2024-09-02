@@ -1,2 +1,0 @@
-target_renamed.bash
-target_renamed.bash

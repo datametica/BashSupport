@@ -1,0 +1,13 @@
+#!/bin/bash
+
+num1=10
+num2=5
+
+result_and=$((num1 & num2))
+echo "The result of $num1 & $num2 (bitwise AND) is: $result_and"
+
+result_xor=$((num1 ^ num2))
+echo "The result of $num1 ^ $num2 (bitwise XOR) is: $result_xor"
+
+result_or=$((num1 | num2))
+echo "The result of $num1 | $num2 (bitwise OR) is: $result_or"

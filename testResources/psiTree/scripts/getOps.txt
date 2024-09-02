@@ -1,0 +1,9 @@
+getopts "cd:" opt;
+echo $opt;
+echo $ARGP;
+getopts "cd:" opt;
+echo $opt;
+echo $ARGP;
+getopts "cd:" opt;
+echo $opt;
+echo $ARGP;

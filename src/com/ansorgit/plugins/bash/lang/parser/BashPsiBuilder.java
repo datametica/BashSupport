@@ -21,11 +21,10 @@ import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.WhitespacesAndCommentsBinder;
 import com.intellij.lang.impl.PsiBuilderAdapter;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.util.containers.Stack;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,12 +46,12 @@ public final class BashPsiBuilder extends PsiBuilderAdapter implements PsiBuilde
     private final BashVersion bashVersion;
     private final BackquoteData backquoteData = new BackquoteData();
     private final ParsingStateData parsingStateData = new ParsingStateData();
-    private final Project project;
+    //private final Project project;
 
-    public BashPsiBuilder(Project project, PsiBuilder wrappedBuilder, BashVersion bashVersion) {
+    public BashPsiBuilder(PsiBuilder wrappedBuilder, BashVersion bashVersion) {
         super(wrappedBuilder);
 
-        this.project = project;
+        //this.project = project;
         this.bashVersion = bashVersion;
         this.tokenRemapper = new BashTokenRemapper(this);
         setTokenTypeRemapper(tokenRemapper);
@@ -201,10 +200,10 @@ public final class BashPsiBuilder extends PsiBuilderAdapter implements PsiBuilde
         }
     }
 
-    public Project getProject() {
+    /*public Project getProject() {
         return project;
     }
-
+*/
     /**
      * Returns an enhanced marker which knows about the error reporting state.
      * The error only adds errors to the tree if error reporting is enabled.

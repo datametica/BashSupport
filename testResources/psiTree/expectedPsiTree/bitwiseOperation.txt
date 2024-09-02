@@ -1,0 +1,137 @@
+ASTWrapperPsiElement(FILE)
+  [PSI] bash shebang
+    PsiElement([Bash] Shebang)('#!/bin/bash\n')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] Bash var def
+      PsiElement([Bash] assignment_word)('num1')
+      PsiElement([Bash] =)('=')
+      [PSI] bash combined word
+        PsiElement([Bash] int literal)('10')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] Bash var def
+      PsiElement([Bash] assignment_word)('num2')
+      PsiElement([Bash] =)('=')
+      [PSI] bash combined word
+        PsiElement([Bash] int literal)('5')
+  PsiElement([Bash] linefeed)('\n')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] Bash var def
+      PsiElement([Bash] assignment_word)('result_and')
+      PsiElement([Bash] =)('=')
+      [PSI] bash combined word
+        [PSI] BashComposedVar
+          PsiElement([Bash] $)('$')
+          [PSI] Arithmetic command
+            PsiElement([Bash] (()('((')
+            [PSI] BitwiseAndExpr
+              [PSI] ArithSimpleExpr
+                [PSI] Bash-var
+                  PsiElement([Bash] word)('num1')
+              PsiWhiteSpace(' ')
+              PsiElement([Bash] &)('&')
+              PsiWhiteSpace(' ')
+              [PSI] ArithSimpleExpr
+                [PSI] Bash-var
+                  PsiElement([Bash] word)('num2')
+            PsiElement([Bash] )))('))')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        PsiElement([Bash] word)('echo')
+    PsiWhiteSpace(' ')
+    [PSI] Bash string
+      PsiElement([Bash] string begin)('"')
+      PsiElement([Bash] string content)('The result of ')
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$num1')
+      PsiElement([Bash] string content)(' & ')
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$num2')
+      PsiElement([Bash] string content)(' (bitwise AND) is: ')
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$result_and')
+      PsiElement([Bash] string end)('"')
+  PsiElement([Bash] linefeed)('\n')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] Bash var def
+      PsiElement([Bash] assignment_word)('result_xor')
+      PsiElement([Bash] =)('=')
+      [PSI] bash combined word
+        [PSI] BashComposedVar
+          PsiElement([Bash] $)('$')
+          [PSI] Arithmetic command
+            PsiElement([Bash] (()('((')
+            [PSI] BitwiseXorExpr
+              [PSI] ArithSimpleExpr
+                [PSI] Bash-var
+                  PsiElement([Bash] word)('num1')
+              PsiWhiteSpace(' ')
+              PsiElement([Bash] ^)('^')
+              PsiWhiteSpace(' ')
+              [PSI] ArithSimpleExpr
+                [PSI] Bash-var
+                  PsiElement([Bash] word)('num2')
+            PsiElement([Bash] )))('))')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        PsiElement([Bash] word)('echo')
+    PsiWhiteSpace(' ')
+    [PSI] Bash string
+      PsiElement([Bash] string begin)('"')
+      PsiElement([Bash] string content)('The result of ')
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$num1')
+      PsiElement([Bash] string content)(' ^ ')
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$num2')
+      PsiElement([Bash] string content)(' (bitwise XOR) is: ')
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$result_xor')
+      PsiElement([Bash] string end)('"')
+  PsiElement([Bash] linefeed)('\n')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] Bash var def
+      PsiElement([Bash] assignment_word)('result_or')
+      PsiElement([Bash] =)('=')
+      [PSI] bash combined word
+        [PSI] BashComposedVar
+          PsiElement([Bash] $)('$')
+          [PSI] Arithmetic command
+            PsiElement([Bash] (()('((')
+            [PSI] BitwiseOrExpr
+              [PSI] ArithSimpleExpr
+                [PSI] Bash-var
+                  PsiElement([Bash] word)('num1')
+              PsiWhiteSpace(' ')
+              PsiElement([Bash] |)('|')
+              PsiWhiteSpace(' ')
+              [PSI] ArithSimpleExpr
+                [PSI] Bash-var
+                  PsiElement([Bash] word)('num2')
+            PsiElement([Bash] )))('))')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        PsiElement([Bash] word)('echo')
+    PsiWhiteSpace(' ')
+    [PSI] Bash string
+      PsiElement([Bash] string begin)('"')
+      PsiElement([Bash] string content)('The result of ')
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$num1')
+      PsiElement([Bash] string content)(' | ')
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$num2')
+      PsiElement([Bash] string content)(' (bitwise OR) is: ')
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$result_or')
+      PsiElement([Bash] string end)('"')

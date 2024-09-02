@@ -102,14 +102,16 @@ public class ParameterExpansionParsing implements ParsingFunction {
         //the first token has to be a plain word token
         BashSmartMarker firstElementMarker = new BashSmartMarker(builder.mark());
 
-        if (!validFirstTokens.contains(firstToken) && !ParserUtil.isWordToken(firstToken)) {
+      if(!ParserUtil.hasNextTokens(builder, false, ASSIGNMENT_WORD, LEFT_SQUARE, PARAM_EXPANSION_OP_STAR, RIGHT_SQUARE)){
+          if (!validFirstTokens.contains(firstToken) && !ParserUtil.isWordToken(firstToken)) {
             if (!builder.isEvalMode() || Parsing.var.isInvalid(builder)) {
-                builder.error("Expected a valid parameter expansion token.");
-                firstElementMarker.drop();
+              builder.error("Expected a valid parameter expansion token.");
+              firstElementMarker.drop();
 
-                //try to minimize the error impact
-                return readRemainingExpansionTokens(builder, marker);
+              //try to minimize the error impact
+              return readRemainingExpansionTokens(builder, marker);
             }
+          }
         }
 
         //the first element is a word token, now check if it is a var use or var def token

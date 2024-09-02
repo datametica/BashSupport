@@ -1,0 +1,9 @@
+echo "START"
+while x=$(( $x + 1 ))
+[ $x -le 3 ]
+do
+  echo "Iteration no $x"
+  continue
+  echo "After Continue"
+done
+echo "END"

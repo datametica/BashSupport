@@ -44,7 +44,6 @@ import com.intellij.psi.tree.IElementType;
 %type IElementType
 
 %{
-    long yychar = 0;
 
     // close a here_string content token if the lexer is currently reading a here string
     void closeHereStringIfAvailable() {
@@ -73,6 +72,8 @@ WhiteSpaceLineCont=[ \t\f] {LineContinuation}*
 Shebang = "#!" {InputCharacter}* {LineTerminator}?
 Comment = "#"  {InputCharacter}*
 
+ParamExpansion = "${" | ('\$'\{)
+
 EscapedChar = "\\" [^\n]
 StringStart = "$\"" | "\""
 
@@ -89,6 +90,8 @@ ArithWordAfter =  {ArithWordFirst} | [0-9#!]
 ParamExpansionWordFirst = [a-zA-Z0-9_] | {EscapedChar} | {LineContinuation}
 ParamExpansionWord = {ParamExpansionWordFirst}+
 
+GetOpsPattern = -[a-z]@\([^)]+\)[a-zA-Z0-9_.*\[\]-]+ | -[a-z]\|
+
 AssignListWordFirst = [[\p{Letter}]||[0-9_/@?.*:&%\^+~,;-]] | {EscapedChar} | {LineContinuation}
 AssignListWordAfter =  {AssignListWordFirst} | [$#!]
 AssignListWord = {AssignListWordFirst}{AssignListWordAfter}*
@@ -102,8 +105,9 @@ PatternExt = ([?*+@!] "(" [^)]+ ")" ) | ([?*+@!] ("[" | "[[") [^]]+ ("]" | "]]")
 Pattern = ({PatternSimple} | {PatternExt})+
 Word = {WordFirst}{WordAfter}*
 ArithWord = {ArithWordFirst}{ArithWordAfter}*
-AssignmentWord = [[\p{Letter}]||[_]] [[\p{Letter}]||[0-9_]]*
-Variable = "$" {AssignmentWord} | "$"[@$#0-9?!*_-]
+AssignmentWord = [[\p{Letter}]||[_]] [[\p{Letter}]||[0-9_$\{\}]]*
+ArrayPattern = [[\p{Letter}]||[0-9_#*\[\]$\{]]* "}"
+Variable = "$" {AssignmentWord} | "$"[@$#0-9?!*_-] | {ParamExpansion} {ArrayPattern}
 
 ArithExpr = ({ArithWord} | [0-9a-z+*-] | {Variable} )+
 
@@ -114,6 +118,7 @@ OctalIntegerLiteral = "0" [0-7]+
 CaseFirst={EscapedChar} | {Pattern} | [^|\"'$)(# \n\r\f\t\f]
 CaseAfter={EscapedChar} | {Pattern} | [^|\"'$`)( \n\r\f\t\f;]
 CasePattern = {CaseFirst} ({LineContinuation}? {CaseAfter})*
+CasePattern2 = "@(" {CasePattern} ")"
 
 Filedescriptor = "&" {IntegerLiteral} | "&-"
 
@@ -182,6 +187,7 @@ Filedescriptor = "&" {IntegerLiteral} | "&-"
 
 /* To match here-strings */
 %xstate X_HERE_STRING
+%xstate S_SINGLE_QUOTE_IN_BACKTICK
 
 %%
 /***************************** INITIAL STAATE ************************************/
@@ -234,7 +240,7 @@ Filedescriptor = "&" {IntegerLiteral} | "&-"
             }
 
             return yystate() == X_HEREDOC && heredocState().isExpectingEvaluatingHeredoc() && !"$".equals(yytext().toString())
-                ? VARIABLE
+                ? HEREDOC_CONTENT
                 : HEREDOC_LINE;
     }
 
@@ -304,7 +310,9 @@ Filedescriptor = "&" {IntegerLiteral} | "&-"
 
 <S_ARITH_ARRAY_MODE> {
     "]" / "=("|"+=("        { backToPreviousState(); goToState(S_ASSIGNMENT_LIST); return RIGHT_SQUARE; }
-    "]"                     { backToPreviousState(); return RIGHT_SQUARE; }
+    "]"                     { backToPreviousState();
+                              if(yystate() == S_ARITH_ARRAY_MODE){backToPreviousState(); }
+                              return RIGHT_SQUARE; }
 }
 
 // Parenthesis lexing
@@ -413,6 +421,7 @@ Filedescriptor = "&" {IntegerLiteral} | "&-"
   "elif"                        { return ELIF_KEYWORD; }
   "else"                        { return ELSE_KEYWORD; }
   "fi"                          { return FI_KEYWORD; }
+  "endif"                       { return ENDIF_KEYWORD; }
   "for"                         { return FOR_KEYWORD; }
   "function"                    { return FUNCTION_KEYWORD; }
   "if"                          { return IF_KEYWORD; }
@@ -520,9 +529,6 @@ Filedescriptor = "&" {IntegerLiteral} | "&-"
   "]"                           { backToPreviousState(); return _EXPR_ARITH_SQUARE; }
 }
 
-<S_ARITH_ARRAY_MODE> {
-  "]"                           { backToPreviousState(); return RIGHT_SQUARE; }
-}
 
 <S_ARITH, S_ARITH_SQUARE_MODE, S_ARITH_ARRAY_MODE> {
   {HexIntegerLiteral}           { return ARITH_HEX_NUMBER; }
@@ -584,6 +590,10 @@ Filedescriptor = "&" {IntegerLiteral} | "&-"
   ":"                           { return ARITH_COLON; }
 
   "#"                           { return ARITH_BASE_CHAR; }
+
+  "*" / "]"                     { return PARAM_EXPANSION_OP_STAR; }
+
+  {ParamExpansion} / {ArrayPattern}                   {goToState(S_PARAM_EXPANSION); yypushback(1); return DOLLAR;}
 
   {AssignmentWord} / "["
                                 { goToState(S_ARRAY); return ASSIGNMENT_WORD; }
@@ -671,6 +681,8 @@ Filedescriptor = "&" {IntegerLiteral} | "&-"
 
   "<&" / {ArithWord}            { return REDIRECT_LESS_AMP; }
   ">&" / {ArithWord}            { return REDIRECT_GREATER_AMP; }
+  ">>&!" / {WhiteSpaceLineCont} { return REDIRECT_GREATER_GREATER_AMP_EXCL; }
+  ">>&" / {WhiteSpaceLineCont}  { return REDIRECT_GREATER_GREATER_AMP; }
   "<&" / {WhiteSpaceLineCont}   { return REDIRECT_LESS_AMP; }
   ">&" / {WhiteSpaceLineCont}   { return REDIRECT_GREATER_AMP; }
 
@@ -697,6 +709,7 @@ Filedescriptor = "&" {IntegerLiteral} | "&-"
   "//"                          { goToState(S_PARAM_EXPANSION_PATTERN); return PARAM_EXPANSION_OP_SLASH_SLASH; }
   "/"                           { goToState(S_PARAM_EXPANSION_PATTERN); return PARAM_EXPANSION_OP_SLASH;  }
 
+  "#" / {AssignmentWord} "[*]"  { goToState(S_ARITH_ARRAY_MODE); return PARAM_EXPANSION_OP_HASH; }
   "##"                          { setParamExpansionHash(isParamExpansionWord()); return PARAM_EXPANSION_OP_HASH_HASH; }
   "#"                           { setParamExpansionHash(isParamExpansionWord()); return PARAM_EXPANSION_OP_HASH; }
   "@"                           { return PARAM_EXPANSION_OP_AT; }
@@ -719,6 +732,10 @@ Filedescriptor = "&" {IntegerLiteral} | "&-"
                                 }
 
   "]"                           { return RIGHT_SQUARE; }
+
+  "{" /"#"{AssignmentWord}"[*]" { setParamExpansionWord(false); setParamExpansionHash(false); setParamExpansionOther(false);
+                                    return LEFT_CURLY;
+                                }
 
   "{"                           { setParamExpansionWord(false); setParamExpansionHash(false); setParamExpansionOther(false);
                                   return LEFT_CURLY;
@@ -750,7 +767,7 @@ Filedescriptor = "&" {IntegerLiteral} | "&-"
 <S_PARAM_EXPANSION_DELIMITER> {
     //with replacement
     "/"                         { backToPreviousState(); goToState(S_PARAM_EXPANSION_REPLACEMENT); return PARAM_EXPANSION_OP_SLASH; }
-    
+
     //no replacement
     "}"                         { yypushback(1); backToPreviousState(); }
 }
@@ -772,7 +789,80 @@ Filedescriptor = "&" {IntegerLiteral} | "&-"
     {LineContinuation}+          { return LINE_CONTINUATION; }
 }
 
-<YYINITIAL, S_TEST, S_TEST_COMMAND, S_ARITH, S_ARITH_SQUARE_MODE, S_ARITH_ARRAY_MODE, S_CASE, S_CASE_PATTERN, S_SUBSHELL, S_ASSIGNMENT_LIST, S_PARAM_EXPANSION, S_BACKQUOTE, S_HEREDOC_EXPECTED> {
+<S_BACKQUOTE> {
+    <X_HERE_STRING> {
+        {StringStart}                 { stringParsingState().enterString(); if (yystate() == X_HERE_STRING && !isInHereStringContent()) enterHereStringContent();
+goToState(X_STRINGMODE); return STRING_BEGIN; }
+
+        \'             { if (yystate() == X_HERE_STRING && !isInHereStringContent()) enterHereStringContent(); goToState(S_SINGLE_QUOTE_IN_BACKTICK); return STRING2; }
+
+    /* Single line feeds are required to properly parse heredocs */
+        {LineTerminator}             {
+                                            if (yystate() == X_HERE_STRING) {
+                                                closeHereStringIfAvailable();
+                                                return LINE_FEED;
+                                            }
+
+                                            if ((yystate() == S_PARAM_EXPANSION || yystate() == S_SUBSHELL || yystate() == S_ARITH || yystate() == S_ARITH_SQUARE_MODE) && isInState(X_HEREDOC)) {
+                                                backToPreviousState();
+                                                return LINE_FEED;
+                                            }
+
+                                            if (!heredocState().isEmpty()) {
+                                                // first linebreak after the start marker
+                                                goToState(X_HEREDOC);
+                                                return LINE_FEED;
+                                            }
+
+                                           return LINE_FEED;
+                                     }
+
+        /* Backquote expression */
+        `                             { if (yystate() == S_BACKQUOTE) backToPreviousState(); else goToState(S_BACKQUOTE); return BACKQUOTE; }
+    }
+
+
+  /* Bash reserved keywords */
+    "{"                           { return LEFT_CURLY; }
+
+    "|&"                          { if (isBash4()) {
+                                        return PIPE_AMP;
+                                     } else {
+                                        yypushback(1);
+                                        return PIPE;
+                                     }
+                                  }
+    "|"                           { return PIPE; }
+
+  /** Misc expressions */
+    "@"                           { return AT; }
+    "$"                           { return DOLLAR; }
+    <X_HERE_STRING> {
+        "&"                           { closeHereStringIfAvailable(); return AMP; }
+        ";"                           { closeHereStringIfAvailable(); return SEMI; }
+    }
+    "<<-" {
+        goToState(X_HEREDOC_MARKER_IGNORE_TABS);
+        return HEREDOC_MARKER_TAG;
+    }
+    "<<" {
+        goToState(X_HEREDOC_MARKER);
+        return HEREDOC_MARKER_TAG;
+    }
+    ">"                           { return GREATER_THAN; }
+    "<"                           { return LESS_THAN; }
+    ">>"                          { return SHIFT_RIGHT; }
+
+    <X_STRINGMODE> {
+        {Variable}                { return VARIABLE; }
+    }
+
+    "$["                          { yypushback(1); goToState(S_ARITH_SQUARE_MODE); return DOLLAR; }
+
+    "\\"                          { return BACKSLASH; }
+}
+
+<YYINITIAL, S_TEST, S_TEST_COMMAND, S_ARITH, S_ARITH_SQUARE_MODE, S_ARITH_ARRAY_MODE, S_CASE, S_CASE_PATTERN, S_SUBSHELL, S_ASSIGNMENT_LIST, S_PARAM_EXPANSION, S_HEREDOC_EXPECTED> {
     <X_HERE_STRING> {
         {StringStart}                 { stringParsingState().enterString(); if (yystate() == X_HERE_STRING && !isInHereStringContent()) enterHereStringContent();
 goToState(X_STRINGMODE); return STRING_BEGIN; }
@@ -847,12 +937,13 @@ goToState(X_STRINGMODE); return STRING_BEGIN; }
 }
 
 <YYINITIAL, X_HEREDOC, S_PARAM_EXPANSION, S_TEST, S_TEST_COMMAND, S_CASE, S_CASE_PATTERN, S_SUBSHELL, S_ARITH, S_ARITH_SQUARE_MODE, S_ARITH_ARRAY_MODE, S_ARRAY, S_ASSIGNMENT_LIST, S_BACKQUOTE, X_STRINGMODE, X_HERE_STRING, S_HEREDOC_EXPECTED> {
-    "${"                        { if (yystate() == X_HEREDOC && !heredocState().isExpectingEvaluatingHeredoc()) return HEREDOC_LINE; goToState(S_PARAM_EXPANSION); yypushback(1); return DOLLAR; }
+    {ParamExpansion}            { if (yystate() == X_HEREDOC && !heredocState().isExpectingEvaluatingHeredoc()) return HEREDOC_LINE; goToState(S_PARAM_EXPANSION); yypushback(1); return DOLLAR; }
     "}"                         { if (yystate() == X_HEREDOC && !heredocState().isExpectingEvaluatingHeredoc()) return HEREDOC_LINE; return RIGHT_CURLY; }
 }
 
 <S_CASE_PATTERN> {
   {CasePattern}                 { return WORD; }
+  {CasePattern2}                { return WORD; }
 }
 
 <YYINITIAL, S_CASE, S_SUBSHELL, S_BACKQUOTE, S_ARRAY, S_HEREDOC_EXPECTED> {
@@ -866,6 +957,17 @@ goToState(X_STRINGMODE); return STRING_BEGIN; }
   }
   {Pattern}                    { return WORD; }
 }
+
+<S_SINGLE_QUOTE_IN_BACKTICK>{
+     [^'`]+                             { return STRING2; }
+     \'                                 { backToPreviousState(); return STRING2; }
+     `                                  { backToPreviousState(); backToPreviousState(); return BACKQUOTE; }
+}
+
+<YYINITIAL> {
+    {GetOpsPattern}             { return WORD; }
+}
+
 
 /** END */
 

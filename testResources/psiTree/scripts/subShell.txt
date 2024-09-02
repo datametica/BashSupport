@@ -1,0 +1,7 @@
+export a=10
+ echo "Before subshell: $a"
+(
+  export a=20
+  echo "inside subshell: $a"
+)
+echo "After subshell: $a"

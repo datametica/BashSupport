@@ -61,6 +61,7 @@ public interface BashTokenTypes {
     IElementType ELIF_KEYWORD = new BashElementType("elif");//elif
     IElementType ELSE_KEYWORD = new BashElementType("else");//else
     IElementType ESAC_KEYWORD = new BashElementType("esac"); //esac
+    IElementType ENDIF_KEYWORD = new BashElementType("endif");//endif
     IElementType FI_KEYWORD = new BashElementType("fi");//fi
     IElementType FOR_KEYWORD = new BashElementType("for");//for
     IElementType FUNCTION_KEYWORD = new BashElementType("function");//function
@@ -280,13 +281,15 @@ public interface BashTokenTypes {
 
     //Bash 4:
     IElementType REDIRECT_AMP_GREATER_GREATER = new BashElementType("&>>");
+    IElementType REDIRECT_GREATER_GREATER_AMP = new BashElementType(">>&");
+    IElementType REDIRECT_GREATER_GREATER_AMP_EXCL = new BashElementType(">>&!");
     IElementType REDIRECT_AMP_GREATER = new BashElementType("&>");
 
     //this must NOT include PIPE_AMP because it's a command separator and not a real redirect token
     TokenSet redirectionSet = TokenSet.create(GREATER_THAN, LESS_THAN, SHIFT_RIGHT,
             REDIRECT_HERE_STRING, REDIRECT_LESS_GREATER,
             REDIRECT_GREATER_BAR, REDIRECT_GREATER_AMP, REDIRECT_AMP_GREATER, REDIRECT_LESS_AMP, REDIRECT_AMP_GREATER_GREATER,
-            HEREDOC_MARKER_TAG);
+            HEREDOC_MARKER_TAG, REDIRECT_GREATER_GREATER_AMP, REDIRECT_GREATER_GREATER_AMP_EXCL);
 
     //sets
     TokenSet EQ_SET = TokenSet.create(EQ);

@@ -1,0 +1,95 @@
+ASTWrapperPsiElement(FILE)
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        PsiElement([Bash] word)('echo')
+    PsiWhiteSpace(' ')
+    [PSI] Bash string
+      PsiElement([Bash] string begin)('"')
+      PsiElement([Bash] string content)('START')
+      PsiElement([Bash] string end)('"')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] PsiElement(while loop)
+    PsiElement([Bash] while)('while')
+    PsiWhiteSpace(' ')
+    [PSI] Simple command
+      [PSI] Bash var def
+        PsiElement([Bash] assignment_word)('x')
+        PsiElement([Bash] =)('=')
+        [PSI] bash combined word
+          [PSI] BashComposedVar
+            PsiElement([Bash] $)('$')
+            [PSI] Arithmetic command
+              PsiElement([Bash] (()('((')
+              PsiWhiteSpace(' ')
+              [PSI] ArithSumExpr
+                [PSI] ArithSimpleExpr
+                  [PSI] Bash-var
+                    PsiElement([Bash] variable)('$x')
+                PsiWhiteSpace(' ')
+                PsiElement([Bash] +)('+')
+                PsiWhiteSpace(' ')
+                [PSI] ArithSimpleExpr
+                  PsiElement([Bash] number)('1')
+              PsiWhiteSpace(' ')
+              PsiElement([Bash] )))('))')
+    PsiElement([Bash] linefeed)('\n')
+    [PSI] PsiElement(conditional shellcommand)
+      PsiElement([Bash] [ (left conditional))('[ ')
+      [PSI] bash combined word
+        [PSI] Bash-var
+          PsiElement([Bash] variable)('$x')
+      PsiWhiteSpace(' ')
+      PsiElement([Bash] cond_op)('-le')
+      PsiWhiteSpace(' ')
+      [PSI] bash combined word
+        PsiElement([Bash] word)('3')
+      PsiElement([Bash]  ] (right conditional))(' ]')
+    PsiElement([Bash] linefeed)('\n')
+    PsiElement([Bash] do)('do')
+    [PSI] PsiElement(logical block)
+      PsiElement([Bash] linefeed)('\n')
+      PsiWhiteSpace(' ')
+      PsiWhiteSpace(' ')
+      [PSI] Simple command
+        [PSI] BashGenericCommand
+          [PSI] bash combined word
+            PsiElement([Bash] word)('echo')
+        PsiWhiteSpace(' ')
+        [PSI] Bash string
+          PsiElement([Bash] string begin)('"')
+          PsiElement([Bash] string content)('Iteration no ')
+          [PSI] Bash-var
+            PsiElement([Bash] variable)('$x')
+          PsiElement([Bash] string end)('"')
+      PsiElement([Bash] linefeed)('\n')
+      PsiWhiteSpace(' ')
+      PsiWhiteSpace(' ')
+      [PSI] Simple command
+        [PSI] BashGenericCommand
+          [PSI] bash combined word
+            PsiElement([Bash] word)('continue')
+      PsiElement([Bash] linefeed)('\n')
+      PsiWhiteSpace(' ')
+      PsiWhiteSpace(' ')
+      [PSI] Simple command
+        [PSI] BashGenericCommand
+          [PSI] bash combined word
+            PsiElement([Bash] word)('echo')
+        PsiWhiteSpace(' ')
+        [PSI] Bash string
+          PsiElement([Bash] string begin)('"')
+          PsiElement([Bash] string content)('After Continue')
+          PsiElement([Bash] string end)('"')
+    PsiElement([Bash] linefeed)('\n')
+    PsiElement([Bash] done)('done')
+  PsiElement([Bash] linefeed)('\n')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        PsiElement([Bash] word)('echo')
+    PsiWhiteSpace(' ')
+    [PSI] Bash string
+      PsiElement([Bash] string begin)('"')
+      PsiElement([Bash] string content)('END')
+      PsiElement([Bash] string end)('"')

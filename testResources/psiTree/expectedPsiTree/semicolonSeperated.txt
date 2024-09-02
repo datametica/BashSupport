@@ -1,0 +1,29 @@
+ASTWrapperPsiElement(FILE)
+  [PSI] Simple command
+    [PSI] Bash var def
+      PsiElement([Bash] assignment_word)('assignment_variable')
+      PsiElement([Bash] =)('=')
+      [PSI] bash combined word
+        PsiElement([Bash] int literal)('10')
+  PsiWhiteSpace(' ')
+  PsiElement([Bash] ;)(';')
+  PsiWhiteSpace(' ')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        PsiElement([Bash] word)('echo')
+    PsiWhiteSpace(' ')
+    [PSI] Bash string
+      PsiElement([Bash] string begin)('"')
+      PsiElement([Bash] string content)('This is semi colon element')
+      PsiElement([Bash] string end)('"')
+  PsiElement([Bash] linefeed)('\n')
+  PsiWhiteSpace(' ')
+  [PSI] Simple command
+    [PSI] BashGenericCommand
+      [PSI] bash combined word
+        PsiElement([Bash] word)('echo')
+    PsiWhiteSpace(' ')
+    [PSI] bash combined word
+      [PSI] Bash-var
+        PsiElement([Bash] variable)('$assignment_variable')
