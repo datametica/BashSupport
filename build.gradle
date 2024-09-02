@@ -61,9 +61,11 @@ test {
     useJUnitPlatform()
 }
 
+version = "1.7.14.145"
+
 shadowJar {
     zip64 = true
-    archiveFileName = 'BashSupport.jar'
+    archiveFileName.set("${project.name}-${project.version}.jar")
 }
 
 sourceSets {
