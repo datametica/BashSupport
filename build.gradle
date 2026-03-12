@@ -22,6 +22,10 @@ tasks.withType(KotlinCompile).configureEach {
     kotlinOptions.jvmTarget = "17"
 }
 
+configurations.configureEach {
+    exclude group: 'tech.carcadex', module: 'kotlinbukkitkit-architecture'
+}
+
 dependencies {
 
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.22'
