@@ -61,7 +61,7 @@ test {
     useJUnitPlatform()
 }
 
-version = "1.7.14.145"
+version = "1.7.14.146"
 
 shadowJar {
     zip64 = true
