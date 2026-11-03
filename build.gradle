@@ -39,7 +39,7 @@ dependencies {
         exclude(group:'org.xerial.snappy', module:'snappy-java')
     }
 
-    implementation 'org.xerial.snappy:snappy-java:1.1.10.5'
+    implementation 'org.xerial.snappy:snappy-java:1.1.10.9'
 
     implementation("net.java.dev.jna:jna:5.14.0")
 
@@ -48,12 +48,13 @@ dependencies {
 
     implementation("com.google.guava:guava") {
         version {
-            strictly("32.0.1-jre")
+            strictly("33.7.2-jre")
         }
         exclude(group:'com.google.code.findbugs', module: 'jsr305')
         exclude(group:'org.checkerframework', module: 'checker-qual')
         exclude(group:'com.google.errorprone', module:'error_prone_annotations')
         exclude(group:'com.google.j2objc', module:'j2objc-annotations')
+        exclude(group:'org.jspecify', module:'jspecify')
     }
 }
 
@@ -61,7 +62,7 @@ test {
     useJUnitPlatform()
 }
 
-version = "1.7.14.146"
+version = "1.7.14.148"
 
 shadowJar {
     zip64 = true
